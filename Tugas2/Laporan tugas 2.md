@@ -1,6 +1,6 @@
 Program ini merupakan aplikasi berbasis konsol (CLI) yang dibangun menggunakan bahasa pemrograman C# pada lingkungan .NET (Visual Studio). Tujuan pembuatan program adalah untuk menerapkan konsep dasar Pemrograman Berorientasi Objek (OOP) dan struktur data koleksi (Collection) dalam mengelola data mahasiswa secara dinamis (CRUD: Create, Read, Delete, Search).
 
-##atribut
+## atribut
 Class Mahasiswa
 
 Berfungsi sebagai blueprint / representasi entitas data mahasiswa.
@@ -21,7 +21,7 @@ List<Mahasiswa> daftarMahasiswa
 
 Struktur data dinamis bawaan System.Collections.Generic untuk menampung seluruh objek mahasiswa di dalam memori saat program berjalan.
 
-##Menu
+## Menu
 Menu Utama & Perulangan (Main)
 
 Menggunakan perulangan do-while agar menu interaktif terus muncul sampai pengguna memilih opsi 5 (Keluar).
@@ -284,7 +284,7 @@ namespace DataMahasiswa
 }
 ```
 
-##Kesimpulan
+## Kesimpulan
 Program berhasil menerapkan pilar dasar OOP seperti pembentukan kelas (Class), enkapsulasi properti, dan konstruktor (Constructor).
 
 Penggunaan List<T> memudahkan pengelolaan data dinamis tanpa perlu membatasi jumlah data di awal seperti pada array konvensional.

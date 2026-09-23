@@ -151,3 +151,31 @@ Clear	Tekan C	Display = 0	✓
 ## 5. Kesimpulan
 
 Aplikasi kalkulator berhasil dibangun menggunakan Windows Forms dengan C#. Program menerapkan konsep event-driven programming melalui event handler, validasi input dengan try-catch, dan penggunaan switch untuk seleksi operasi. Penambahan InvariantCulture dan flag startNewNumber dilakukan sebagai perbaikan terhadap potensi bug pada modul asli terkait locale sistem dan kondisi edge case input.
+
+## Soal
+
+1. Apa fungsi object sender pada event handler?
+
+sender adalah referensi ke objek yang memicu event. Saat tombol diklik, sender berisi objek Button tersebut. Dengan melakukan cast (Button)sender, kita bisa membaca properti tombol seperti .Text tanpa perlu membuat handler terpisah untuk tiap tombol.
+
+2. Mengapa semua tombol angka dapat memakai satu NumberButton_Click?
+
+Karena logika semua tombol angka identik — ambil teks tombol, tampilkan di display. Yang berbeda hanya nilai .Text tiap tombol (0–9). Karena nilai itu dibaca dari sender, satu handler cukup untuk semua. Tidak perlu btn1_Click, btn2_Click, dst.
+
+3. Apa perbedaan firstNumber, secondNumber, dan result?
+
+Variabel	Fungsi
+firstNumber	Menyimpan angka pertama, diisi saat tombol operator diklik
+secondNumber	Menyimpan angka kedua, diisi saat tombol = diklik
+result	Menyimpan hasil operasi antara keduanya
+
+Contoh: input 10 + 20 = → firstNumber = 10, secondNumber = 20, result = 30.
+
+4. Mengapa pembagian dengan nol perlu divalidasi?
+
+Matematika tidak mendefinisikan hasil pembagian dengan nol. Dalam C#, double / 0 tidak langsung crash melainkan menghasilkan Infinity yang tidak valid sebagai output kalkulator. Validasi eksplisit memastikan pengguna mendapat pesan error yang jelas, bukan hasil yang menyesatkan.
+
+
+5. Bagaimana try-catch membantu menjaga aplikasi tetap stabil?
+
+Tanpa try-catch, error seperti input huruf atau pembagian nol akan menyebabkan aplikasi crash dan tertutup paksa. Dengan try-catch, error ditangkap, ditampilkan sebagai pesan ke pengguna, lalu state direset — aplikasi tetap berjalan dan siap menerima input baru.

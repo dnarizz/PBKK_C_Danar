@@ -1,0 +1,105 @@
+﻿<Window x:Class="StudentRegistrationApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Student Registration App (Level 1 &amp; 2)" 
+        Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="360"/>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- FORM INPUT (Level 1) -->
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="0,0,10,0">
+                <TextBlock Text="STUDENT REGISTRATION" FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                <TextBlock Text="NIM *" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtNim" Height="30" Margin="0,3,0,10"/>
+
+                <TextBlock Text="Nama Mahasiswa *" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtNama" Height="30" Margin="0,3,0,10"/>
+
+                <TextBlock Text="Program Studi *" FontWeight="SemiBold"/>
+                <ComboBox x:Name="cmbProdi" Height="30" Margin="0,3,0,10">
+                    <ComboBoxItem Content="Teknik Informatika"/>
+                    <ComboBoxItem Content="Sistem Informasi"/>
+                    <ComboBoxItem Content="Manajemen"/>
+                    <ComboBoxItem Content="Akuntansi"/>
+                </ComboBox>
+
+                <TextBlock Text="Jenis Kelamin *" FontWeight="SemiBold"/>
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,10">
+                    <RadioButton x:Name="rbLaki" Content="Laki-laki" Margin="0,0,20,0"/>
+                    <RadioButton x:Name="rbPerempuan" Content="Perempuan"/>
+                </StackPanel>
+
+                <!-- Input Tambahan Level 1 -->
+                <TextBlock Text="Tanggal Lahir" FontWeight="SemiBold"/>
+                <DatePicker x:Name="dpTanggalLahir" Height="30" Margin="0,3,0,10"/>
+
+                <TextBlock Text="Nomor Telepon" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtTelepon" Height="30" Margin="0,3,0,10"/>
+
+                <TextBlock Text="Alamat" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtAlamat" Height="60" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,3,0,15"/>
+
+                <!-- Tombol Aksi Form -->
+                <WrapPanel Margin="0,5,0,0">
+                    <Button x:Name="btnSimpan" Content="Simpan" Width="80" Height="32" Margin="0,0,8,0" Click="BtnSimpan_Click"/>
+                    <Button x:Name="btnUpdate" Content="Update" Width="80" Height="32" Margin="0,0,8,0" Click="BtnUpdate_Click" IsEnabled="False"/>
+                    <Button x:Name="btnReset" Content="Reset" Width="80" Height="32" Click="BtnReset_Click"/>
+                </WrapPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- DATA VIEW, SEARCH & COUNTER (Level 2) -->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="DAFTAR MAHASISWA" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+
+            <!-- Fitur Pencarian & Counter -->
+            <Grid Grid.Row="1" Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="0">
+                    <TextBlock Text="Cari: " VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    <TextBox x:Name="txtSearch" Width="200" Height="28" Margin="5,0,0,0" TextChanged="TxtSearch_TextChanged"/>
+                </StackPanel>
+
+                <TextBlock x:Name="lblCounter" Grid.Column="1" Text="Jumlah Mahasiswa: 0" FontWeight="Bold" Foreground="#1E3A8A" VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- Tabel Data -->
+            <DataGrid x:Name="dgMahasiswa" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" 
+                      SelectionMode="Single" SelectionChanged="DgMahasiswa_SelectionChanged"
+                      CanUserAddRows="False" AlternatingRowBackground="#F9FAFB">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="NIM" Binding="{Binding Nim}" Width="90"/>
+                    <DataGridTextColumn Header="Nama" Binding="{Binding Nama}" Width="140"/>
+                    <DataGridTextColumn Header="Prodi" Binding="{Binding Prodi}" Width="120"/>
+                    <DataGridTextColumn Header="Gender" Binding="{Binding JenisKelamin}" Width="80"/>
+                    <DataGridTextColumn Header="Tgl Lahir" Binding="{Binding TanggalLahir, StringFormat=\{0:dd/MM/yyyy\}}" Width="90"/>
+                    <DataGridTextColumn Header="Telepon" Binding="{Binding NoTelepon}" Width="100"/>
+                    <DataGridTextColumn Header="Alamat" Binding="{Binding Alamat}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Tombol Hapus Data Terpilih -->
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button x:Name="btnHapus" Content="Hapus Data" Width="100" Height="32" Click="BtnHapus_Click" Background="#EF4444" Foreground="White"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

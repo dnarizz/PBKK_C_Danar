@@ -1,0 +1,55 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Stroke icons on a 24x24 grid, adapted from Lucide (ISC license, see THIRD-PARTY-NOTICES.md). -->
+    <Geometry x:Key="Icon.leaf">M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5 -4.8 10 -10 10Z M2 21c0 -3 1.9 -5.4 5.1 -6</Geometry>
+    <Geometry x:Key="Icon.dashboard">M4 3h5a1 1 0 0 1 1 1v7a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1Z M15 3h5a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1Z M15 12h5a1 1 0 0 1 1 1v7a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1Z M4 16h5a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1Z</Geometry>
+    <Geometry x:Key="Icon.tag">M12 2H2v10l9.3 9.3a1 1 0 0 0 1.4 0l8.6 -8.6a1 1 0 0 0 0 -1.4Z M5.5 7a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0</Geometry>
+    <Geometry x:Key="Icon.home">M3 10L12 3L21 10v10a1 1 0 0 1 -1 1H4a1 1 0 0 1 -1 -1Z M9 21v-6h6v6</Geometry>
+    <Geometry x:Key="Icon.box">M21 8L12 3L3 8v8l9 5l9 -5Z M3 8l9 5l9 -5 M12 13v8</Geometry>
+    <Geometry x:Key="Icon.heart">M19 14c1.5 -1.5 3 -3.2 3 -5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0 -3 0.5 -4.5 2c-1.5 -1.5 -2.7 -2 -4.5 -2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z M3.2 12h4.3l1.5 -3l3 6l1.5 -3h4.3</Geometry>
+    <Geometry x:Key="Icon.repro">M3 6a3 3 0 1 0 6 0a3 3 0 1 0 -6 0 M15 6a3 3 0 1 0 6 0a3 3 0 1 0 -6 0 M9 18a3 3 0 1 0 6 0a3 3 0 1 0 -6 0 M6 9v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2V9 M12 12v3</Geometry>
+    <Geometry x:Key="Icon.swap">M8 3L4 7l4 4 M4 7h16 M16 21l4 -4l-4 -4 M20 17H4</Geometry>
+    <Geometry x:Key="Icon.wallet">M4 6h16a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2H4a2 2 0 0 1 -2 -2V8a2 2 0 0 1 2 -2Z M2 10h20 M16 15h2</Geometry>
+    <Geometry x:Key="Icon.file">M14 3H6a2 2 0 0 0 -2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2V9Z M14 3v6h6 M8 13h8 M8 17h5</Geometry>
+    <Geometry x:Key="Icon.db">M4 5a8 3 0 1 0 16 0a8 3 0 1 0 -16 0 M4 5v14c0 1.7 3.6 3 8 3s8 -1.3 8 -3V5 M4 12c0 1.7 3.6 3 8 3s8 -1.3 8 -3</Geometry>
+    <Geometry x:Key="Icon.users">M5 8a4 4 0 1 0 8 0a4 4 0 1 0 -8 0 M2 21a7 7 0 0 1 14 0 M16 4a4 4 0 0 1 0 8 M22 21a7 7 0 0 0 -4 -6.3</Geometry>
+    <Geometry x:Key="Icon.settings">M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0 M19.4 15a1.7 1.7 0 0 0 0.3 1.8l0.1 0.1a2 2 0 1 1 -2.8 2.8l-0.1 -0.1a1.7 1.7 0 0 0 -1.8 -0.3a1.7 1.7 0 0 0 -1 1.5V21a2 2 0 1 1 -4 0v-0.1a1.7 1.7 0 0 0 -1.1 -1.5a1.7 1.7 0 0 0 -1.8 0.3l-0.1 0.1a2 2 0 1 1 -2.8 -2.8l0.1 -0.1a1.7 1.7 0 0 0 0.3 -1.8a1.7 1.7 0 0 0 -1.5 -1H3a2 2 0 1 1 0 -4h0.1a1.7 1.7 0 0 0 1.5 -1.1a1.7 1.7 0 0 0 -0.3 -1.8l-0.1 -0.1a2 2 0 1 1 2.8 -2.8l0.1 0.1a1.7 1.7 0 0 0 1.8 0.3H9a1.7 1.7 0 0 0 1 -1.5V3a2 2 0 1 1 4 0v0.1a1.7 1.7 0 0 0 1 1.5a1.7 1.7 0 0 0 1.8 -0.3l0.1 -0.1a2 2 0 1 1 2.8 2.8l-0.1 0.1a1.7 1.7 0 0 0 -0.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-0.1a1.7 1.7 0 0 0 -1.5 1Z</Geometry>
+    <Geometry x:Key="Icon.logout">M9 21H5a2 2 0 0 1 -2 -2V5a2 2 0 0 1 2 -2h4 M16 17l5 -5l-5 -5 M21 12H9</Geometry>
+    <Geometry x:Key="Icon.search">M4 11a7 7 0 1 0 14 0a7 7 0 1 0 -14 0 M20 20l-3.5 -3.5</Geometry>
+    <Geometry x:Key="Icon.bell">M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3 -2 3 -9 M10.3 21a1.94 1.94 0 0 0 3.4 0</Geometry>
+    <Geometry x:Key="Icon.plus">M12 5v14 M5 12h14</Geometry>
+    <Geometry x:Key="Icon.x">M18 6L6 18 M6 6l12 12</Geometry>
+    <Geometry x:Key="Icon.check">M20 6L9 17l-5 -5</Geometry>
+    <Geometry x:Key="Icon.eye">M2 12s3.5 -7 10 -7s10 7 10 7s-3.5 7 -10 7S2 12 2 12Z M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0</Geometry>
+    <Geometry x:Key="Icon.eyeOff">M9.9 4.2A10 10 0 0 1 12 4c7 0 10 8 10 8a17 17 0 0 1 -3.2 4.2 M6.6 6.6A17 17 0 0 0 2 12s3 8 10 8a9.7 9.7 0 0 0 5.4 -1.6 M2 2l20 20 M9.9 9.9a3 3 0 0 0 4.2 4.2</Geometry>
+    <Geometry x:Key="Icon.lock">M5 11h14a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2H5a2 2 0 0 1 -2 -2v-7a2 2 0 0 1 2 -2Z M7 11V7a5 5 0 0 1 10 0v4</Geometry>
+    <Geometry x:Key="Icon.user">M8 8a4 4 0 1 0 8 0a4 4 0 1 0 -8 0 M4 21a8 8 0 0 1 16 0</Geometry>
+    <Geometry x:Key="Icon.guest">M2 12a10 10 0 1 0 20 0a10 10 0 1 0 -20 0 M9 10a3 3 0 1 0 6 0a3 3 0 1 0 -6 0 M6.2 18.8a7 7 0 0 1 11.6 0</Geometry>
+    <Geometry x:Key="Icon.alert">M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7 -3L13.7 3.9a2 2 0 0 0 -3.4 0Z M12 9v4 M12 17h0.01</Geometry>
+    <Geometry x:Key="Icon.calendar">M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2H5a2 2 0 0 1 -2 -2V6a2 2 0 0 1 2 -2Z M16 2v4 M8 2v4 M3 10h18</Geometry>
+    <Geometry x:Key="Icon.scale">M12 3v18 M7 21h10 M5 7h14 M5 7l-3 7a3 3 0 0 0 6 0Z M19 7l-3 7a3 3 0 0 0 6 0Z</Geometry>
+    <Geometry x:Key="Icon.syringe">M18 2l4 4 M17 7l3 -3 M19 9L8.7 19.3a2.4 2.4 0 0 1 -3.4 0l-0.6 -0.6a2.4 2.4 0 0 1 0 -3.4L15 5 M9 11l4 4 M5 19l-3 3 M14 4l6 6</Geometry>
+    <Geometry x:Key="Icon.download">M12 3v12 M7 10l5 5l5 -5 M5 21h14</Geometry>
+    <Geometry x:Key="Icon.upload">M12 15V3 M7 8l5 -5l5 5 M5 21h14</Geometry>
+    <Geometry x:Key="Icon.chevL">M15 18l-6 -6l6 -6</Geometry>
+    <Geometry x:Key="Icon.chevR">M9 18l6 -6l-6 -6</Geometry>
+    <Geometry x:Key="Icon.chevD">M6 9l6 6l6 -6</Geometry>
+    <Geometry x:Key="Icon.arrowR">M5 12h14 M13 6l6 6l-6 6</Geometry>
+    <Geometry x:Key="Icon.edit">M12 20h9 M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1l1 -4Z</Geometry>
+    <Geometry x:Key="Icon.info">M2 12a10 10 0 1 0 20 0a10 10 0 1 0 -20 0 M12 16v-4 M12 8h0.01</Geometry>
+    <Geometry x:Key="Icon.trend">M22 7l-8.5 8.5l-5 -5L2 17 M16 7h6v6</Geometry>
+    <Geometry x:Key="Icon.excel">M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2H5a2 2 0 0 1 -2 -2V5a2 2 0 0 1 2 -2Z M3 9h18 M3 15h18 M9 3v18</Geometry>
+    <Geometry x:Key="Icon.restore">M3 12a9 9 0 1 0 3 -6.7L3 8 M3 3v5h5</Geometry>
+    <Geometry x:Key="Icon.key">M3 15.5a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0 M10.7 12.3L20 3 M16 7l3 3 M19 4l2 2</Geometry>
+    <Geometry x:Key="Icon.moon">M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z</Geometry>
+    <Geometry x:Key="Icon.sun">M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0 M12 2v2 M12 20v2 M4.9 4.9l1.4 1.4 M17.7 17.7l1.4 1.4 M2 12h2 M20 12h2 M4.9 19.1l1.4 -1.4 M17.7 6.3l1.4 -1.4</Geometry>
+    <Geometry x:Key="Icon.copy">M10 8h9a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-9a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2Z M4 16a2 2 0 0 1 -2 -2V5a2 2 0 0 1 2 -2h9a2 2 0 0 1 2 2</Geometry>
+
+    <!-- Placeholder photo for an animal, 64x64. -->
+    <Geometry x:Key="Art.cow">M14 18c-5 0 -8 -3 -8 -6c4 0 7 1 9 3 M50 18c5 0 8 -3 8 -6c-4 0 -7 1 -9 3 M18 14c2 -3 6 -5 14 -5s12 2 14 5c2 4 2 10 0 16c-1 4 -1 9 -2 13c-1 6 -6 11 -12 11s-11 -5 -12 -11c-1 -4 -1 -9 -2 -13c-2 -6 -2 -12 0 -16Z M24 44c0 -4 4 -6 8 -6s8 2 8 6s-4 7 -8 7s-8 -3 -8 -7Z M23.4 27a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0 M37.4 27a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0</Geometry>
+
+    <!-- Three farm scenes on a 260x110 grid: barn, windmill, hay cart. -->
+    <Geometry x:Key="Scene.0">M150 52L182 28l32 24 M157.5 50h49a1.5 1.5 0 0 1 1.5 1.5v38.5h-52v-38.5a1.5 1.5 0 0 1 1.5 -1.5Z M174 90V66h16v24 M174 66l16 24 M190 66l-16 24 M10 82v16 M28 82v16 M46 82v16 M64 82v16 M82 82v16 M4 87h84 M4 94h84 M224 60a12 12 0 1 0 24 0a12 12 0 1 0 -24 0 M236 72v24 M110 98c2 -8 4 -12 8 -14 M116 98c0 -6 2 -9 5 -11 M122 98c-1 -5 -3 -8 -6 -9</Geometry>
+    <Geometry x:Key="Scene.1">M120 98V44a14 14 0 0 1 28 0v54 M120 58h28 M120 72h28 M120 86h28 M134 30v-4 M196 98l14 -58l14 58 M201 78h18 M205 60h10 M207 36a3 3 0 1 0 6 0a3 3 0 1 0 -6 0 M210 36l-16 -9 M210 36l16 -9 M210 36v-18 M210 36l-16 9 M210 36l16 9 M213 36h20l4 -4v8l-4 -4 M20 88h46l-4 10H24Z M14 88h58 M80 98c1 -7 3 -10 6 -12 M86 98c0 -5 2 -8 4 -9 M160 98v-14 M176 98v-14 M156 88h24 M156 94h24</Geometry>
+    <Geometry x:Key="Scene.2">M22 84a14 14 0 1 0 28 0a14 14 0 1 0 -28 0 M29 84a7 7 0 1 0 7 -7 M59 89a9 9 0 1 0 18 0a9 9 0 1 0 -18 0 M64 89a4 4 0 1 0 4 -4 M118 80h58v-14h-58Z M120 66c6 -12 18 -14 26 -6c8 -10 22 -8 28 6 M124 88a10 10 0 1 0 20 0a10 10 0 1 0 -20 0 M134 78v20 M124 88h20 M127 81l14 14 M141 81l-14 14 M176 72l28 -8 M200 28q5 -6 10 0q5 -6 10 0 M224 16q4 -5 8 0q4 -5 8 0 M222 98c2 -9 5 -13 9 -15 M229 98c0 -6 2 -10 6 -12 M236 98c-1 -6 -3 -9 -7 -10</Geometry>
+</ResourceDictionary>

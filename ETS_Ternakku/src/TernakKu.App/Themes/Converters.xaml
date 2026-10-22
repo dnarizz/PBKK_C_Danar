@@ -1,0 +1,15 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="clr-namespace:TernakKu.App.Controls">
+    <c:NotConverter x:Key="Not"/>
+    <c:EqualsConverter x:Key="Eq"/>
+    <c:DisplayMemberConverter x:Key="DisplayMember"/>
+    <c:BoolToVisibleConverter x:Key="BoolToVisible"/>
+    <c:BoolToVisibleConverter x:Key="BoolToCollapsed" Invert="True"/>
+    <c:EmptyToCollapsedConverter x:Key="EmptyToCollapsed"/>
+    <c:EmptyToCollapsedConverter x:Key="EmptyToVisible" Invert="True"/>
+    <c:SceneGeometryConverter x:Key="SceneGeometry"/>
+    <c:StarConverter x:Key="Star"/>
+    <c:BrushKeyConverter x:Key="BrushKey"/>
+    <c:PercentToLengthConverter x:Key="PercentToLength"/>
+</ResourceDictionary>

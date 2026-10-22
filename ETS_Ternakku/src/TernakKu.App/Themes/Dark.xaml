@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="PrimaryBrush" Color="#6CC04A"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#82CF62"/>
+    <SolidColorBrush x:Key="PrimarySoftBrush" Color="#1E3318"/>
+    <SolidColorBrush x:Key="PrimaryInkBrush" Color="#A6E08C"/>
+    <SolidColorBrush x:Key="OnPrimaryBrush" Color="#0E1A09"/>
+    <SolidColorBrush x:Key="LeafBrush" Color="#4E8F37"/>
+    <SolidColorBrush x:Key="LeafInkBrush" Color="#F2FAEC"/>
+    <SolidColorBrush x:Key="BgBrush" Color="#121511"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#1A1E18"/>
+    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#222820"/>
+    <SolidColorBrush x:Key="SurfaceSunkenBrush" Color="#161A14"/>
+    <SolidColorBrush x:Key="BorderBrush" Color="#2B3227"/>
+    <SolidColorBrush x:Key="BorderStrongBrush" Color="#353D30"/>
+    <SolidColorBrush x:Key="DividerBrush" Color="#242A21"/>
+    <SolidColorBrush x:Key="TextBrush" Color="#ECEFE6"/>
+    <SolidColorBrush x:Key="Text2Brush" Color="#A3AD99"/>
+    <SolidColorBrush x:Key="SidebarBrush" Color="#172A12"/>
+    <SolidColorBrush x:Key="SidebarTextBrush" Color="#ECEFE6"/>
+    <SolidColorBrush x:Key="SidebarMutedBrush" Color="#A9BC9E"/>
+    <SolidColorBrush x:Key="SidebarHoverBrush" Color="#14ECEFE6"/>
+    <SolidColorBrush x:Key="SidebarCardBrush" Color="#14ECEFE6"/>
+    <SolidColorBrush x:Key="SidebarFootBrush" Color="#33000000"/>
+    <SolidColorBrush x:Key="WarnBrush" Color="#F0B45A"/>
+    <SolidColorBrush x:Key="WarnBarBrush" Color="#E0A84A"/>
+    <SolidColorBrush x:Key="WarnSoftBrush" Color="#3A2C14"/>
+    <SolidColorBrush x:Key="WarnBorderBrush" Color="#574120"/>
+    <SolidColorBrush x:Key="DangerBrush" Color="#F07A6C"/>
+    <SolidColorBrush x:Key="DangerSoftBrush" Color="#3B1C18"/>
+    <SolidColorBrush x:Key="InfoBrush" Color="#7EB2EE"/>
+    <SolidColorBrush x:Key="InfoSoftBrush" Color="#18263A"/>
+    <SolidColorBrush x:Key="TitlebarBrush" Color="#0E110D"/>
+    <SolidColorBrush x:Key="ScrimBrush" Color="#8C000000"/>
+    <SolidColorBrush x:Key="HeroBgBrush" Color="#1A3314"/>
+    <SolidColorBrush x:Key="HeroTextBrush" Color="#ECEFE6"/>
+    <SolidColorBrush x:Key="HeroMutedBrush" Color="#A9BC9E"/>
+    <SolidColorBrush x:Key="HeroLineBrush" Color="#29ECEFE6"/>
+    <SolidColorBrush x:Key="SnackBgBrush" Color="#ECEFE6"/>
+    <SolidColorBrush x:Key="SnackTextBrush" Color="#1A1E18"/>
+    <SolidColorBrush x:Key="DecoSunBrush" Color="#17E0A84A"/>
+    <SolidColorBrush x:Key="DecoHillBrush" Color="#4E8F37"/>
+    <Color x:Key="ShadowColor">#000000</Color>
+    <Color x:Key="DecoSunColor">#17E0A84A</Color>
+</ResourceDictionary>

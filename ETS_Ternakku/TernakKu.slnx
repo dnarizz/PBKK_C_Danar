@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TernakKu.App/TernakKu.App.csproj" />
+    <Project Path="src/TernakKu.Core/TernakKu.Core.csproj" />
+    <Project Path="src/TernakKu.Data/TernakKu.Data.csproj" />
+  </Folder>
+</Solution>

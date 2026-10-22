@@ -1,0 +1,175 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Pages.KeuanganView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls"
+             xmlns:p="clr-namespace:TernakKu.App.ViewModels.Pages"
+             xmlns:v="clr-namespace:TernakKu.App.Views.Pages">
+    <UserControl.Resources>
+        <v:PilihanKonverter x:Key="Pilih"/>
+        <Style x:Key="StatIcon" TargetType="Border" BasedOn="{StaticResource IcoBox}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Tone}" Value="warn">
+                    <Setter Property="Background" Value="{DynamicResource WarnSoftBrush}"/>
+                    <Setter Property="TextElement.Foreground" Value="{DynamicResource WarnBrush}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Tone}" Value="danger">
+                    <Setter Property="Background" Value="{DynamicResource DangerSoftBrush}"/>
+                    <Setter Property="TextElement.Foreground" Value="{DynamicResource DangerBrush}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="StatValue" TargetType="TextBlock" BasedOn="{StaticResource T.Stat}">
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Berwarna}" Value="True"/>
+                        <Condition Binding="{Binding Tone}" Value="ok"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Berwarna}" Value="True"/>
+                        <Condition Binding="{Binding Tone}" Value="danger"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Foreground" Value="{DynamicResource DangerBrush}"/>
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="JumlahMasuk" TargetType="TextBlock" BasedOn="{StaticResource Cell.StrongRight}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Masuk}" Value="True">
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <!-- Header -->
+        <Grid Margin="0,0,0,20">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Keuangan" Style="{StaticResource T.H1}"/>
+                <TextBlock Text="Pemasukan, pengeluaran, dan laba-rugi" Style="{StaticResource T.Muted}" Margin="0,2,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Border Style="{StaticResource SegGroup}" Margin="0,0,12,0">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton GroupName="rentang" Content="Bulan ini" Style="{StaticResource Seg}" IsChecked="{Binding Rentang, Converter={StaticResource Pilih}, ConverterParameter=1}"/>
+                        <RadioButton GroupName="rentang" Content="3 bulan" Style="{StaticResource Seg}" IsChecked="{Binding Rentang, Converter={StaticResource Pilih}, ConverterParameter=3}"/>
+                        <RadioButton GroupName="rentang" Content="6 bulan" Style="{StaticResource Seg}" IsChecked="{Binding Rentang, Converter={StaticResource Pilih}, ConverterParameter=6}"/>
+                    </StackPanel>
+                </Border>
+                <Button Style="{StaticResource Btn.Primary}" Command="{Binding TambahCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <c:Icon Kind="plus" Size="16" Thickness="2.25"/>
+                        <TextBlock Text="Catat transaksi" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- Stat cards -->
+        <ItemsControl ItemsSource="{Binding Kartu}" Margin="0,0,-16,4">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type p:KartuStat}">
+                    <Border Style="{StaticResource Card}" Margin="0,0,16,16">
+                        <StackPanel>
+                            <DockPanel>
+                                <Border Style="{StaticResource StatIcon}" DockPanel.Dock="Left"><c:Icon Kind="{Binding Ikon}" Size="16" Thickness="2"/></Border>
+                                <TextBlock Text="{Binding Judul}" Style="{StaticResource T.Muted}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                            </DockPanel>
+                            <TextBlock Text="{Binding Nilai}" Style="{StaticResource StatValue}" Margin="0,12,0,0"/>
+                            <TextBlock Text="{Binding Sub}" Style="{StaticResource T.Small}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Cash flow + categories -->
+        <Grid Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <DockPanel Margin="0,0,0,12">
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Top" TextElement.FontSize="12" TextElement.Foreground="{DynamicResource Text2Brush}">
+                            <Rectangle Width="10" Height="10" RadiusX="3" RadiusY="3" Fill="{DynamicResource PrimaryBrush}" Margin="0,0,6,0"/>
+                            <TextBlock Text="Pemasukan" Margin="0,0,14,0"/>
+                            <Rectangle Width="10" Height="10" RadiusX="3" RadiusY="3" Fill="{DynamicResource WarnBarBrush}" Margin="0,0,6,0"/>
+                            <TextBlock Text="Pengeluaran"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Arus kas 6 bulan" Style="{StaticResource T.H2}"/>
+                            <TextBlock Text="Pemasukan dan pengeluaran per bulan" Style="{StaticResource T.Muted}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </DockPanel>
+                    <c:GroupedBarChart Height="230" Masuk="{Binding ArusMasuk}" Keluar="{Binding ArusKeluar}" Labels="{Binding LabelBulan}"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="2" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Pengeluaran per kategori" Style="{StaticResource T.H2}" Margin="0,0,0,12"/>
+                    <TextBlock Text="Tidak ada pengeluaran" Style="{StaticResource T.Muted}" Visibility="{Binding Kategori, Converter={StaticResource EmptyToVisible}}"/>
+                    <ItemsControl ItemsSource="{Binding Kategori}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type p:BarKategori}">
+                                <StackPanel Margin="0,0,0,12">
+                                    <DockPanel Margin="0,0,0,6">
+                                        <TextBlock DockPanel.Dock="Right" Text="{Binding Jumlah}" FontWeight="SemiBold" FontSize="13"/>
+                                        <TextBlock Text="{Binding Nama}" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                                    </DockPanel>
+                                    <ProgressBar Style="{StaticResource Meter}" Value="{Binding Persen, Mode=OneWay}" Foreground="{DynamicResource WarnBarBrush}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Transactions -->
+        <Border Style="{StaticResource CardFlush}">
+            <StackPanel>
+                <DockPanel Margin="16,14">
+                    <Button DockPanel.Dock="Right" Style="{StaticResource Btn.SecondarySm}" Command="{Binding EksporCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <c:Icon Kind="excel" Size="14"/>
+                            <TextBlock Text="Ekspor Excel" Margin="8,0,0,0"/>
+                        </StackPanel>
+                    </Button>
+                    <Border Style="{StaticResource SegGroup}">
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton GroupName="jenisKeu" Content="Semua" Style="{StaticResource Seg}" IsChecked="{Binding JenisFilter, Converter={StaticResource Pilih}, ConverterParameter=Semua}"/>
+                            <RadioButton GroupName="jenisKeu" Content="Pemasukan" Style="{StaticResource Seg}" IsChecked="{Binding JenisFilter, Converter={StaticResource Pilih}, ConverterParameter=Masuk}"/>
+                            <RadioButton GroupName="jenisKeu" Content="Pengeluaran" Style="{StaticResource Seg}" IsChecked="{Binding JenisFilter, Converter={StaticResource Pilih}, ConverterParameter=Keluar}"/>
+                        </StackPanel>
+                    </Border>
+                </DockPanel>
+                <TextBlock Text="Belum ada transaksi pada periode ini" Style="{StaticResource T.Muted}" Margin="20,8,20,24" Visibility="{Binding Baris, Converter={StaticResource EmptyToVisible}}"/>
+                <DataGrid Style="{StaticResource Grid}" ItemsSource="{Binding Baris}" MaxHeight="420" Visibility="{Binding Baris, Converter={StaticResource EmptyToCollapsed}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Tanggal" Binding="{Binding Tanggal}" Width="120" ElementStyle="{StaticResource Cell.Muted}"/>
+                        <DataGridTextColumn Header="Keterangan" Binding="{Binding Keterangan}" Width="*"/>
+                        <DataGridTextColumn Header="Kategori" Binding="{Binding Kategori}" Width="160" ElementStyle="{StaticResource Cell.Muted}"/>
+                        <DataGridTemplateColumn Header="Sumber" Width="190">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <c:Badge Text="{Binding Sumber}" Tone="{Binding SumberTone}" ShowDot="False" HorizontalAlignment="Left"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Jumlah" Binding="{Binding Jumlah}" Width="160" HeaderStyle="{StaticResource GridHeaderRight}" ElementStyle="{StaticResource JumlahMasuk}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Pages.PenggunaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls"
+             x:Name="page">
+    <StackPanel>
+        <Grid Margin="0,0,0,20">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Pengguna" Style="{StaticResource T.H1}"/>
+                <TextBlock Text="Akun dan hak akses di database akun" Style="{StaticResource T.Muted}" Margin="0,2,0,0"/>
+            </StackPanel>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource Btn.Primary}" Command="{Binding TambahCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <c:Icon Kind="plus" Size="16" Thickness="2.25"/>
+                    <TextBlock Text="Tambah pengguna" Margin="8,0,0,0"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <Border Style="{StaticResource CardFlush}" Margin="0,0,0,20">
+            <DataGrid Style="{StaticResource Grid}" ItemsSource="{Binding Pengguna}" MaxHeight="480">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nama" Binding="{Binding Nama}" Width="*" ElementStyle="{StaticResource Cell.Strong}"/>
+                    <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="150" ElementStyle="{StaticResource Cell.Muted}"/>
+                    <DataGridTemplateColumn Header="Peran" Width="130">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <c:Badge Text="{Binding Peran}" Tone="{Binding PeranTone}" ShowDot="False" HorizontalAlignment="Left"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Status" Width="120">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <c:Badge Text="{Binding Status}" Tone="{Binding StatusTone}" HorizontalAlignment="Left"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Login terakhir" Binding="{Binding Terakhir}" Width="140" ElementStyle="{StaticResource Cell.Muted}"/>
+                    <DataGridTemplateColumn Width="280">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Right">
+                                    <TextBlock Text="Anda" Style="{StaticResource T.Muted}" Visibility="{Binding Saya, Converter={StaticResource BoolToVisible}}"/>
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding Saya, Converter={StaticResource BoolToCollapsed}}">
+                                        <Button Style="{StaticResource Btn.GhostSm}" Command="{Binding DataContext.ResetCommand, ElementName=page}" CommandParameter="{Binding Id}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <c:Icon Kind="key" Size="14"/>
+                                                <TextBlock Text="Reset password" Margin="8,0,0,0"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Style="{StaticResource Btn.SecondarySm}" Margin="8,0,0,0" Content="{Binding TombolGanti}"
+                                                Command="{Binding DataContext.GantiCommand, ElementName=page}" CommandParameter="{Binding Id}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Border Style="{StaticResource CardFlush}">
+            <StackPanel>
+                <TextBlock Text="Hak akses per peran" Style="{StaticResource T.H2}" Margin="20,16,20,8"/>
+                <DataGrid Style="{StaticResource Grid}" ItemsSource="{Binding Akses}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Fitur" Binding="{Binding Fitur}" Width="*" ElementStyle="{StaticResource Cell.Strong}"/>
+                        <DataGridTextColumn Header="Admin" Binding="{Binding Admin}" Width="160"/>
+                        <DataGridTextColumn Header="Petugas kandang" Binding="{Binding Petugas}" Width="160"/>
+                        <DataGridTextColumn Header="Mantri" Binding="{Binding Mantri}" Width="160"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

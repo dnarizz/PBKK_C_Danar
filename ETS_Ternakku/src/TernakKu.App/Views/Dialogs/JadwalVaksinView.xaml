@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Dialogs.JadwalVaksinView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls">
+    <StackPanel>
+        <TextBlock Text="Kandang" Style="{StaticResource T.Label}"/>
+        <ComboBox ItemsSource="{Binding DaftarKandang}" DisplayMemberPath="Label" SelectedValuePath="Id" SelectedValue="{Binding IdKandang}" AutomationProperties.Name="Kandang"/>
+        <TextBlock Text="{Binding ErrKandang.Teks}" Style="{StaticResource T.Error}" Visibility="{Binding ErrKandang.Teks, Converter={StaticResource EmptyToCollapsed}}"/>
+
+        <TextBlock Text="Vaksin" Style="{StaticResource T.Label}" Margin="0,14,0,6"/>
+        <ComboBox ItemsSource="{Binding DaftarVaksin}" DisplayMemberPath="Label" SelectedValuePath="Id" SelectedValue="{Binding IdVaksin}" AutomationProperties.Name="Vaksin"/>
+
+        <TextBlock Text="Tanggal rencana" Style="{StaticResource T.Label}" Margin="0,14,0,6"/>
+        <DatePicker SelectedDate="{Binding Rencana}" DisplayDateStart="{Binding BatasAwal, Mode=OneWay}" AutomationProperties.Name="Tanggal rencana"/>
+        <TextBlock Text="{Binding ErrRencana.Teks}" Style="{StaticResource T.Error}" Visibility="{Binding ErrRencana.Teks, Converter={StaticResource EmptyToCollapsed}}"/>
+        <TextBlock Text="Pengingat muncul 3 hari sebelumnya" Style="{StaticResource T.Hint}"/>
+    </StackPanel>
+</UserControl>

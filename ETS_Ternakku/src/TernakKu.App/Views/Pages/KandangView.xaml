@@ -1,0 +1,175 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Pages.KandangView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls"
+             x:Name="page">
+    <UserControl.Resources>
+        <Style x:Key="ToneMeter" TargetType="ProgressBar" BasedOn="{StaticResource Meter}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Tone}" Value="warn"><Setter Property="Foreground" Value="{DynamicResource WarnBarBrush}"/></DataTrigger>
+                <DataTrigger Binding="{Binding Tone}" Value="danger"><Setter Property="Foreground" Value="{DynamicResource DangerBrush}"/></DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="PanelMeter" TargetType="ProgressBar" BasedOn="{StaticResource Meter}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding TonePanel}" Value="warn"><Setter Property="Foreground" Value="{DynamicResource WarnBarBrush}"/></DataTrigger>
+                <DataTrigger Binding="{Binding TonePanel}" Value="danger"><Setter Property="Foreground" Value="{DynamicResource DangerBrush}"/></DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="PenTile" TargetType="Border" BasedOn="{StaticResource Card}">
+            <Setter Property="Padding" Value="16"/>
+        </Style>
+        <Style x:Key="SectionCaps" TargetType="TextBlock" BasedOn="{StaticResource T.Caps}">
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel>
+        <!-- Header -->
+        <Grid Margin="0,0,0,20">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Denah kandang" Style="{StaticResource T.H1}"/>
+                <TextBlock Text="{Binding Subjudul}" Style="{StaticResource T.Muted}" Margin="0,2,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" TextElement.FontSize="12" TextElement.Foreground="{DynamicResource Text2Brush}">
+                <StackPanel.Resources>
+                    <Style TargetType="Rectangle"><Setter Property="VerticalAlignment" Value="Center"/></Style>
+                    <Style TargetType="TextBlock"><Setter Property="VerticalAlignment" Value="Center"/></Style>
+                </StackPanel.Resources>
+                <Rectangle Width="10" Height="10" RadiusX="3" RadiusY="3" Fill="{DynamicResource PrimaryBrush}" Margin="0,0,6,0"/><TextBlock Text="di bawah 80%" Margin="0,0,14,0"/>
+                <Rectangle Width="10" Height="10" RadiusX="3" RadiusY="3" Fill="{DynamicResource WarnBarBrush}" Margin="0,0,6,0"/><TextBlock Text="80–99%" Margin="0,0,14,0"/>
+                <Rectangle Width="10" Height="10" RadiusX="3" RadiusY="3" Fill="{DynamicResource DangerBrush}" Margin="0,0,6,0"/><TextBlock Text="penuh" Margin="0,0,16,0"/>
+                <Button Style="{StaticResource Btn.Primary}" Command="{Binding TambahKandangCommand}" Visibility="{Binding BolehMaster, Converter={StaticResource BoolToVisible}}" TextElement.FontSize="14">
+                    <StackPanel Orientation="Horizontal">
+                        <c:Icon Kind="plus" Size="16" Thickness="2.25"/>
+                        <TextBlock Text="Tambah kandang" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="360"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Pen tiles -->
+            <ItemsControl ItemsSource="{Binding Petak}" VerticalAlignment="Top">
+                <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Style="{StaticResource Btn.Plain}" Width="204" Margin="0,0,16,16" Command="{Binding DataContext.PilihCommand, ElementName=page}" CommandParameter="{Binding Id}">
+                            <Border x:Name="tile" Style="{StaticResource PenTile}">
+                                <StackPanel>
+                                    <DockPanel>
+                                        <Border x:Name="code" Width="40" Height="40" CornerRadius="8" Background="{DynamicResource PrimaryBrush}" DockPanel.Dock="Left">
+                                            <TextBlock x:Name="codeText" Text="{Binding Kode}" FontWeight="Bold" FontSize="15" Foreground="{DynamicResource OnPrimaryBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Nama}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Text="{Binding Sub}" Style="{StaticResource T.Small}" TextTrimming="CharacterEllipsis"/>
+                                        </StackPanel>
+                                    </DockPanel>
+                                    <ProgressBar Style="{StaticResource ToneMeter}" Value="{Binding Persen, Mode=OneWay}" Margin="0,14,0,10"/>
+                                    <DockPanel>
+                                        <TextBlock DockPanel.Dock="Right" Text="{Binding KapTeks}" Style="{StaticResource T.Small}" VerticalAlignment="Center"/>
+                                        <TextBlock VerticalAlignment="Center"><Run Text="{Binding Jumlah, Mode=OneWay}" FontWeight="Bold"/><Run Text=" ekor" Foreground="{DynamicResource Text2Brush}"/></TextBlock>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Border>
+                        </Button>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Tone}" Value="warn">
+                                <Setter TargetName="code" Property="Background" Value="{DynamicResource WarnBarBrush}"/>
+                                <Setter TargetName="codeText" Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Tone}" Value="danger">
+                                <Setter TargetName="code" Property="Background" Value="{DynamicResource DangerBrush}"/>
+                                <Setter TargetName="codeText" Property="Foreground" Value="White"/>
+                            </DataTrigger>
+                            <Trigger SourceName="tile" Property="IsMouseOver" Value="True">
+                                <Setter TargetName="tile" Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding Dipilih}" Value="True">
+                                <Setter TargetName="tile" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+                                <Setter TargetName="tile" Property="BorderThickness" Value="2"/>
+                                <Setter TargetName="tile" Property="Padding" Value="15"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Side panel -->
+            <Border Grid.Column="2" Style="{StaticResource Card}" VerticalAlignment="Top" Visibility="{Binding AdaPanel, Converter={StaticResource BoolToVisible}}">
+                <StackPanel>
+                    <TextBlock Text="{Binding JudulPanel}" Style="{StaticResource T.H2}" FontSize="18" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock Text="{Binding SubPanel}" Style="{StaticResource T.Muted}" Margin="0,2,0,0"/>
+                    <ProgressBar Style="{StaticResource PanelMeter}" Value="{Binding PersenPanel, Mode=OneWay}" Margin="0,16,0,0"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                        <Button Style="{StaticResource Btn.PrimarySm}" Command="{Binding BeriPakanCommand}" Margin="0,0,8,0" Visibility="{Binding BolehPakan, Converter={StaticResource BoolToVisible}}">
+                            <StackPanel Orientation="Horizontal"><c:Icon Kind="box" Size="14"/><TextBlock Text="Beri pakan" Margin="6,0,0,0"/></StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource Btn.SecondarySm}" Command="{Binding LihatTernakCommand}">
+                            <StackPanel Orientation="Horizontal"><c:Icon Kind="tag" Size="14"/><TextBlock Text="Lihat ternak" Margin="6,0,0,0"/></StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <TextBlock Text="PAKAN HARI INI" Style="{StaticResource SectionCaps}" Margin="0,20,0,6"/>
+                    <TextBlock Text="Belum diberi pakan hari ini" Style="{StaticResource T.Muted}" Visibility="{Binding PakanHariIni, Converter={StaticResource EmptyToVisible}}"/>
+                    <ItemsControl ItemsSource="{Binding PakanHariIni}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Margin="0,0,0,6">
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding Jumlah}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding Nama}" TextTrimming="CharacterEllipsis"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <TextBlock Text="KESEHATAN" Style="{StaticResource SectionCaps}" Margin="0,16,0,6"/>
+                    <DockPanel Margin="0,0,0,6">
+                        <StackPanel DockPanel.Dock="Right">
+                            <c:Badge Text="{Binding JumlahSakit, StringFormat={}{0} ekor}" Tone="warn" Visibility="{Binding AdaSakit, Converter={StaticResource BoolToVisible}}"/>
+                            <c:Badge Text="Semua sehat" Tone="ok" Visibility="{Binding Sehat, Converter={StaticResource BoolToVisible}}"/>
+                        </StackPanel>
+                        <TextBlock Text="Perlu perhatian" VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding VaksinBerikut}" Style="{StaticResource T.Small}" FontSize="13" VerticalAlignment="Center"/>
+                        <TextBlock Text="Vaksin berikutnya" VerticalAlignment="Center"/>
+                    </DockPanel>
+
+                    <DockPanel Margin="0,20,0,6">
+                        <Button DockPanel.Dock="Right" Style="{StaticResource Btn.Link}" Command="{Binding LihatTernakCommand}" Padding="0" Content="{Binding IsiPanel, StringFormat=Lihat {0}}"/>
+                        <TextBlock Text="TERNAK DI KANDANG INI" Style="{StaticResource T.Caps}" VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBlock Text="Kandang kosong" Style="{StaticResource T.Muted}" Visibility="{Binding TernakPanel, Converter={StaticResource EmptyToVisible}}"/>
+                    <ItemsControl ItemsSource="{Binding TernakPanel}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource Btn.Plain}" Command="{Binding DataContext.BukaTernakCommand, ElementName=page}" CommandParameter="{Binding Id}">
+                                    <Border x:Name="row" Padding="4,7" BorderBrush="{DynamicResource DividerBrush}" BorderThickness="0,0,0,1" Background="Transparent">
+                                        <DockPanel>
+                                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                                                <c:Badge Text="{Binding Kondisi}" Tone="{Binding Tone}" Margin="0,0,8,0" Visibility="{Binding AdaKondisi, Converter={StaticResource BoolToVisible}}"/>
+                                                <TextBlock Text="{Binding Berat}" Style="{StaticResource T.Small}" FontSize="13"/>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding Label}" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryBrush}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                                        </DockPanel>
+                                    </Border>
+                                </Button>
+                                <DataTemplate.Triggers>
+                                    <Trigger SourceName="row" Property="IsMouseOver" Value="True"><Setter TargetName="row" Property="Background" Value="{DynamicResource SurfaceHoverBrush}"/></Trigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </StackPanel>
+</UserControl>

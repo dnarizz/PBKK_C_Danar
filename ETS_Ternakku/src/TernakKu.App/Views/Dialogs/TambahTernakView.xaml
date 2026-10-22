@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Dialogs.TambahTernakView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls">
+    <UserControl.Resources>
+        <Style x:Key="KandangItem" TargetType="ComboBoxItem" BasedOn="{StaticResource ComboItem}">
+            <Setter Property="IsEnabled" Value="{Binding Bisa}"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="0,0,0,16">
+            <TextBlock Text="Spesies" Style="{StaticResource T.Label}"/>
+            <ComboBox ItemsSource="{Binding DaftarSpesies}" DisplayMemberPath="Nama" SelectedValuePath="Id" SelectedValue="{Binding SpesiesId}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Margin="0,0,0,16">
+            <TextBlock Text="Ras" Style="{StaticResource T.Label}"/>
+            <ComboBox ItemsSource="{Binding DaftarRas}" DisplayMemberPath="Nama" SelectedValuePath="Id" SelectedValue="{Binding RasId}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="0,0,0,16">
+            <TextBlock Text="Kode ear tag" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding Kode, UpdateSourceTrigger=PropertyChanged}" CharacterCasing="Upper" c:Ui.Invalid="{Binding KodeSalah}"/>
+            <TextBlock Text="{Binding KodeError}" Style="{StaticResource T.Error}" Visibility="{Binding KodeError, Converter={StaticResource EmptyToCollapsed}}"/>
+            <TextBlock Text="Terisi otomatis, boleh diubah" Style="{StaticResource T.Hint}" Visibility="{Binding KodeError, Converter={StaticResource EmptyToVisible}}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,16">
+            <TextBlock Text="Nama (opsional)" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding Nama, UpdateSourceTrigger=PropertyChanged}" c:Ui.Placeholder="mis. Bima"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Margin="0,0,0,16">
+            <TextBlock Text="Jenis kelamin" Style="{StaticResource T.Label}"/>
+            <ComboBox ItemsSource="{Binding DaftarKelamin}" SelectedItem="{Binding JenisKelamin}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,0,0,16">
+            <TextBlock Text="Tanggal lahir" Style="{StaticResource T.Label}"/>
+            <DatePicker SelectedDate="{Binding TanggalLahir}" DisplayDateEnd="{Binding BatasLahir, Mode=OneWay}"/>
+            <TextBlock Text="{Binding LahirError}" Style="{StaticResource T.Error}" Visibility="{Binding LahirError, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Margin="0,0,0,16">
+            <TextBlock Text="Kandang" Style="{StaticResource T.Label}"/>
+            <ComboBox ItemsSource="{Binding DaftarKandang}" DisplayMemberPath="Teks" SelectedValuePath="Id" SelectedValue="{Binding KandangId}" ItemContainerStyle="{StaticResource KandangItem}"/>
+            <TextBlock Text="{Binding KandangError}" Style="{StaticResource T.Error}" Visibility="{Binding KandangError, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="2" Margin="0,0,0,16">
+            <TextBlock Text="Berat awal" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding Berat, UpdateSourceTrigger=PropertyChanged}" c:Ui.Suffix="kg" c:Ui.Invalid="{Binding BeratSalah}"/>
+            <TextBlock Text="{Binding BeratError}" Style="{StaticResource T.Error}" Visibility="{Binding BeratError, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4">
+            <TextBlock Text="Asal usul" Style="{StaticResource T.Label}"/>
+            <ComboBox ItemsSource="{Binding DaftarAsal}" DisplayMemberPath="Teks" SelectedValuePath="Nilai" SelectedValue="{Binding Asal}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Grid.Column="2" Visibility="{Binding AsalBeli, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Harga beli (Rp)" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding HargaBeli, UpdateSourceTrigger=PropertyChanged}" c:Ui.Placeholder="0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Grid.Column="2" Visibility="{Binding AsalBeli, Converter={StaticResource BoolToCollapsed}}">
+            <TextBlock Text="Induk" Style="{StaticResource T.Label}"/>
+            <ComboBox ItemsSource="{Binding DaftarInduk}" DisplayMemberPath="Teks" SelectedValuePath="Id" SelectedValue="{Binding IndukId}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

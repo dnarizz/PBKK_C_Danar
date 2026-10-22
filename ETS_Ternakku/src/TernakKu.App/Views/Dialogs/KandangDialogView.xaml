@@ -1,0 +1,43 @@
+<UserControl x:Class="TernakKu.App.Views.Dialogs.KandangDialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="0,0,0,16">
+            <TextBlock Text="Kode" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding Kode, UpdateSourceTrigger=PropertyChanged}" CharacterCasing="Upper" c:Ui.Invalid="{Binding KodeSalah}"/>
+            <TextBlock Text="{Binding KodeError}" Style="{StaticResource T.Error}" Visibility="{Binding KodeError, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Margin="0,0,0,16">
+            <TextBlock Text="Nama" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding Nama, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding NamaSalah}"/>
+            <TextBlock Text="{Binding NamaError}" Style="{StaticResource T.Error}" Visibility="{Binding NamaError, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="0,0,0,16">
+            <TextBlock Text="Jenis" Style="{StaticResource T.Label}"/>
+            <ComboBox ItemsSource="{Binding DaftarJenis}" SelectedItem="{Binding Jenis}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,16">
+            <TextBlock Text="Spesies" Style="{StaticResource T.Label}"/>
+            <ComboBox ItemsSource="{Binding DaftarSpesies}" DisplayMemberPath="Teks" SelectedValuePath="Id" SelectedValue="{Binding SpesiesId}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="Kapasitas (ekor)" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding Kapasitas, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding KapasitasSalah}"/>
+            <TextBlock Text="{Binding KapasitasError}" Style="{StaticResource T.Error}" Visibility="{Binding KapasitasError, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

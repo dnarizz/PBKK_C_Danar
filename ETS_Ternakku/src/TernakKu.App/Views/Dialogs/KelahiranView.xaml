@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Dialogs.KelahiranView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls">
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Margin="0,0,0,14">
+                <TextBlock Text="Tanggal lahir" Style="{StaticResource T.Label}"/>
+                <DatePicker SelectedDate="{Binding Tanggal}" DisplayDateEnd="{Binding BatasTanggal, Mode=OneWay}" AutomationProperties.Name="Tanggal lahir"/>
+                <TextBlock Text="{Binding ErrTanggal.Teks}" Style="{StaticResource T.Error}" Visibility="{Binding ErrTanggal.Teks, Converter={StaticResource EmptyToCollapsed}}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Margin="0,0,0,14">
+                <TextBlock Text="Jumlah anak" Style="{StaticResource T.Label}"/>
+                <ComboBox ItemsSource="{Binding DaftarJumlah}" DisplayMemberPath="Nilai" SelectedValuePath="Nilai" SelectedValue="{Binding Jumlah}" AutomationProperties.Name="Jumlah anak"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Margin="0,0,0,14">
+                <TextBlock Text="Mati saat lahir" Style="{StaticResource T.Label}"/>
+                <ComboBox ItemsSource="{Binding DaftarMati}" DisplayMemberPath="Nilai" SelectedValuePath="Nilai" SelectedValue="{Binding Mati}" AutomationProperties.Name="Mati saat lahir"/>
+                <TextBlock Text="{Binding ErrMati.Teks}" Style="{StaticResource T.Error}" Visibility="{Binding ErrMati.Teks, Converter={StaticResource EmptyToCollapsed}}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,14">
+                <TextBlock Text="Kandang anak" Style="{StaticResource T.Label}"/>
+                <ComboBox ItemsSource="{Binding DaftarKandang}" DisplayMemberPath="Label" SelectedValuePath="Id" SelectedValue="{Binding IdKandang}" AutomationProperties.Name="Kandang anak"/>
+                <TextBlock Text="{Binding ErrKandang.Teks}" Style="{StaticResource T.Error}" Visibility="{Binding ErrKandang.Teks, Converter={StaticResource EmptyToCollapsed}}"/>
+            </StackPanel>
+        </Grid>
+
+        <ItemsControl ItemsSource="{Binding Anak}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,0,0,14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="{Binding LabelKelamin}" Style="{StaticResource T.Label}"/>
+                            <ComboBox ItemsSource="{Binding DaftarKelamin}" DisplayMemberPath="Teks" SelectedValuePath="Nilai" SelectedValue="{Binding Kelamin}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="{Binding LabelBerat}" Style="{StaticResource T.Label}"/>
+                            <TextBox Text="{Binding Berat, UpdateSourceTrigger=PropertyChanged}" c:Ui.Placeholder="kosong = bobot standar"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <TextBlock Text="{Binding Ringkas}" Style="{StaticResource T.Muted}"/>
+    </StackPanel>
+</UserControl>

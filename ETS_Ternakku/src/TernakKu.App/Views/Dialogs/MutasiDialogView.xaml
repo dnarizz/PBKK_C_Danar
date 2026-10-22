@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Dialogs.MutasiDialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls">
+    <UserControl.Resources>
+        <Style x:Key="TujuanItem" TargetType="ComboBoxItem" BasedOn="{StaticResource ComboItem}">
+            <Setter Property="IsEnabled" Value="{Binding Bisa}"/>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel>
+        <TextBlock Text="Jenis mutasi" Style="{StaticResource T.Label}"/>
+        <Border Style="{StaticResource SegGroup}" Margin="0,0,0,16">
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Style="{StaticResource Seg}" GroupName="jenisMutasi" Content="Pindah kandang" IsChecked="{Binding IsPindah}"/>
+                <RadioButton Style="{StaticResource Seg}" GroupName="jenisMutasi" Content="Jual" IsChecked="{Binding IsJual}"/>
+                <RadioButton Style="{StaticResource Seg}" GroupName="jenisMutasi" Content="Mati" IsChecked="{Binding IsMati}"/>
+            </StackPanel>
+        </Border>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.ColumnSpan="3" Margin="0,0,0,16">
+                <TextBlock Text="Ternak" Style="{StaticResource T.Label}"/>
+                <ComboBox ItemsSource="{Binding DaftarTernak}" DisplayMemberPath="Teks" SelectedValuePath="Id" SelectedValue="{Binding TernakId}"/>
+                <TextBlock Text="{Binding TernakError}" Style="{StaticResource T.Error}" Visibility="{Binding TernakError, Converter={StaticResource EmptyToCollapsed}}"/>
+                <TextBlock Text="{Binding Info}" Style="{StaticResource T.Hint}" Visibility="{Binding Info, Converter={StaticResource EmptyToCollapsed}}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="Tanggal" Style="{StaticResource T.Label}"/>
+                <DatePicker SelectedDate="{Binding Tanggal}" DisplayDateEnd="{Binding BatasTanggal, Mode=OneWay}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="2" Visibility="{Binding IsPindah, Converter={StaticResource BoolToVisible}}">
+                <TextBlock Text="Kandang tujuan" Style="{StaticResource T.Label}"/>
+                <ComboBox ItemsSource="{Binding DaftarTujuan}" DisplayMemberPath="Teks" SelectedValuePath="Id" SelectedValue="{Binding KandangTujuanId}" ItemContainerStyle="{StaticResource TujuanItem}"/>
+                <TextBlock Text="{Binding TujuanError}" Style="{StaticResource T.Error}" Visibility="{Binding TujuanError, Converter={StaticResource EmptyToCollapsed}}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="2" Visibility="{Binding IsJual, Converter={StaticResource BoolToVisible}}">
+                <TextBlock Text="Harga jual (Rp)" Style="{StaticResource T.Label}"/>
+                <TextBox Text="{Binding HargaJual, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding HargaSalah}"/>
+                <TextBlock Text="{Binding HargaError}" Style="{StaticResource T.Error}" Visibility="{Binding HargaError, Converter={StaticResource EmptyToCollapsed}}"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Margin="0,16,0,0" Visibility="{Binding IsJual, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Pembeli" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding Pembeli, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding PembeliSalah}"/>
+            <TextBlock Text="{Binding PembeliError}" Style="{StaticResource T.Error}" Visibility="{Binding PembeliError, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <StackPanel Margin="0,16,0,0" Visibility="{Binding IsMati, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Penyebab kematian" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding Penyebab, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding PenyebabSalah}"/>
+            <TextBlock Text="{Binding PenyebabError}" Style="{StaticResource T.Error}" Visibility="{Binding PenyebabError, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <TextBlock Text="{Binding Catatan}" Style="{StaticResource T.Muted}" Margin="0,16,0,0" Visibility="{Binding Catatan, Converter={StaticResource EmptyToCollapsed}}"/>
+    </StackPanel>
+</UserControl>

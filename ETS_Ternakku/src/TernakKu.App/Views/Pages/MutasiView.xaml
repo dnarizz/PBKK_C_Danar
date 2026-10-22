@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Pages.MutasiView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls">
+    <UserControl.Resources>
+        <Style x:Key="ToneIco" TargetType="Border" BasedOn="{StaticResource IcoBox}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Tone}" Value="info">
+                    <Setter Property="Background" Value="{DynamicResource InfoSoftBrush}"/>
+                    <Setter Property="TextElement.Foreground" Value="{DynamicResource InfoBrush}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Tone}" Value="danger">
+                    <Setter Property="Background" Value="{DynamicResource DangerSoftBrush}"/>
+                    <Setter Property="TextElement.Foreground" Value="{DynamicResource DangerBrush}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Tone}" Value="warn">
+                    <Setter Property="Background" Value="{DynamicResource WarnSoftBrush}"/>
+                    <Setter Property="TextElement.Foreground" Value="{DynamicResource WarnBrush}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="Kartu">
+            <Border Style="{StaticResource Card}" Margin="0,0,16,0">
+                <StackPanel>
+                    <DockPanel>
+                        <Border DockPanel.Dock="Right" Style="{StaticResource ToneIco}"><c:Icon Kind="{Binding Ikon}" Size="16" Thickness="2"/></Border>
+                        <TextBlock Text="{Binding Label}" Style="{StaticResource T.Muted}" VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <TextBlock Text="{Binding Nilai}" Style="{StaticResource T.Stat}"/>
+                        <TextBlock Text="{Binding Satuan}" Style="{StaticResource T.Muted}" VerticalAlignment="Bottom" Margin="6,0,0,5"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Sub}" Style="{StaticResource T.Small}" Margin="0,2,0,0"/>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+    <StackPanel>
+        <Grid Margin="0,0,0,20">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Mutasi" Style="{StaticResource T.H1}"/>
+                <TextBlock Text="Pindah kandang, penjualan, dan kematian" Style="{StaticResource T.Muted}" Margin="0,2,0,0"/>
+            </StackPanel>
+            <Button Style="{StaticResource Btn.Primary}" HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding TambahCommand}"
+                    Visibility="{Binding BolehTambah, Converter={StaticResource BoolToVisible}}">
+                <StackPanel Orientation="Horizontal">
+                    <c:Icon Kind="plus" Size="16" Thickness="2.25"/>
+                    <TextBlock Text="Mutasi baru" Margin="8,0,0,0"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <ItemsControl ItemsSource="{Binding Kartu}" ItemTemplate="{StaticResource Kartu}" Margin="0,0,-16,20">
+            <ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+        </ItemsControl>
+
+        <Border Style="{StaticResource CardFlush}">
+            <StackPanel>
+                <Border Style="{StaticResource SegGroup}" Margin="16,14">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Style="{StaticResource Seg}" GroupName="filterMutasi" Content="Semua" IsChecked="{Binding FSemua}"/>
+                        <RadioButton Style="{StaticResource Seg}" GroupName="filterMutasi" Content="Pindah" IsChecked="{Binding FPindah}"/>
+                        <RadioButton Style="{StaticResource Seg}" GroupName="filterMutasi" Content="Jual" IsChecked="{Binding FJual}"/>
+                        <RadioButton Style="{StaticResource Seg}" GroupName="filterMutasi" Content="Mati" IsChecked="{Binding FMati}"/>
+                    </StackPanel>
+                </Border>
+                <Border Height="1" Background="{DynamicResource DividerBrush}"/>
+                <DataGrid Style="{StaticResource Grid}" ItemsSource="{Binding Daftar}" MaxHeight="480" Visibility="{Binding Daftar, Converter={StaticResource EmptyToCollapsed}}">
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow" BasedOn="{StaticResource GridRow}">
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="Row_Click"/>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Tanggal" Binding="{Binding Tanggal}" Width="120"/>
+                        <DataGridTemplateColumn Header="Ternak" Width="*" MinWidth="220">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextTrimming="CharacterEllipsis">
+                                        <Run Text="{Binding Ternak, Mode=OneWay}" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryBrush}"/><Run Text=" · " Foreground="{DynamicResource Text2Brush}"/><Run Text="{Binding Spesies, Mode=OneWay}" Foreground="{DynamicResource Text2Brush}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Jenis" Width="110">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <c:Badge Text="{Binding Jenis}" Tone="{Binding Tone}" ShowDot="False" HorizontalAlignment="Left"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Detail" Binding="{Binding Detail}" Width="260"/>
+                        <DataGridTextColumn Header="Dicatat" Binding="{Binding Oleh}" Width="120" ElementStyle="{StaticResource Cell.Muted}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <StackPanel HorizontalAlignment="Center" Margin="0,48" Visibility="{Binding Daftar, Converter={StaticResource EmptyToVisible}}">
+                    <TextBlock Text="Belum ada mutasi" Style="{StaticResource T.Strong}" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

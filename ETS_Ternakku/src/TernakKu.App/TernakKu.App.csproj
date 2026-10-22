@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>TernakKu.App</RootNamespace>
+    <AssemblyName>TernakKu</AssemblyName>
+    <Version>1.0.0</Version>
+    <ApplicationIcon>Assets\TernakKu.ico</ApplicationIcon>
+    <Product>TernakKu</Product>
+    <Description>TernakKu — manajemen peternakan</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\TernakKu.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TernakKu.Core\TernakKu.Core.csproj" />
+    <ProjectReference Include="..\TernakKu.Data\TernakKu.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+  </ItemGroup>
+
+</Project>

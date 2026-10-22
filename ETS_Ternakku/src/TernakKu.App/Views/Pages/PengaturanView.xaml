@@ -1,0 +1,153 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Pages.PengaturanView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls"
+             xmlns:v="clr-namespace:TernakKu.App.Views.Pages">
+    <UserControl.Resources>
+        <v:PilihanKonverter x:Key="Pilih"/>
+        <Style x:Key="SettingRow" TargetType="Border">
+            <Setter Property="Padding" Value="0,14"/>
+            <Setter Property="BorderThickness" Value="0,1,0,0"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource DividerBrush}"/>
+        </Style>
+        <Style x:Key="SettingFirst" TargetType="Border" BasedOn="{StaticResource SettingRow}">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0,8,0,0"/>
+        </Style>
+        <Style x:Key="SettingTitle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <StackPanel Margin="0,0,0,20">
+            <TextBlock Text="Pengaturan" Style="{StaticResource T.H1}"/>
+            <TextBlock Text="Tampilan, cara masuk, dan database" Style="{StaticResource T.Muted}" Margin="0,2,0,0"/>
+        </StackPanel>
+
+        <!-- Tampilan -->
+        <Border Style="{StaticResource Card}" Margin="0,0,0,20">
+            <StackPanel>
+                <TextBlock Text="Tampilan" Style="{StaticResource T.H2}"/>
+                <Border Style="{StaticResource SettingFirst}">
+                    <DockPanel>
+                        <Border DockPanel.Dock="Right" Style="{StaticResource SegGroup}">
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton GroupName="tema" Content="Terang" Style="{StaticResource Seg}" IsChecked="{Binding Tema, Converter={StaticResource Pilih}, ConverterParameter=light}"/>
+                                <RadioButton GroupName="tema" Content="Gelap" Style="{StaticResource Seg}" IsChecked="{Binding Tema, Converter={StaticResource Pilih}, ConverterParameter=dark}"/>
+                            </StackPanel>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Tema" Style="{StaticResource SettingTitle}"/>
+                            <TextBlock Text="Terang atau gelap" Style="{StaticResource T.Small}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+                <Border Style="{StaticResource SettingRow}">
+                    <DockPanel>
+                        <Border DockPanel.Dock="Right" Style="{StaticResource SegGroup}">
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton GroupName="padat" Content="Nyaman" Style="{StaticResource Seg}" IsChecked="{Binding Kepadatan, Converter={StaticResource Pilih}, ConverterParameter=nyaman}"/>
+                                <RadioButton GroupName="padat" Content="Padat" Style="{StaticResource Seg}" IsChecked="{Binding Kepadatan, Converter={StaticResource Pilih}, ConverterParameter=padat}"/>
+                            </StackPanel>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Kepadatan tabel" Style="{StaticResource SettingTitle}"/>
+                            <TextBlock Text="{Binding KeteranganKepadatan}" Style="{StaticResource T.Small}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- Masuk -->
+        <Border Style="{StaticResource Card}" Margin="0,0,0,20">
+            <StackPanel>
+                <TextBlock Text="Masuk" Style="{StaticResource T.H2}"/>
+                <Border Style="{StaticResource SettingFirst}">
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" Style="{StaticResource Btn.Secondary}" Content="Lupakan" Command="{Binding LupakanCommand}" VerticalAlignment="Center"
+                                Visibility="{Binding Mengingat, Converter={StaticResource BoolToVisible}}"/>
+                        <Button DockPanel.Dock="Right" Style="{StaticResource Btn.Secondary}" Content="Ingat pilihan ini" Command="{Binding IngatSayaCommand}" VerticalAlignment="Center"
+                                Visibility="{Binding Mengingat, Converter={StaticResource BoolToCollapsed}}"/>
+                        <StackPanel VerticalAlignment="Center" Margin="0,0,16,0">
+                            <TextBlock Text="Ingat saya" Style="{StaticResource SettingTitle}"/>
+                            <TextBlock Text="{Binding KeteranganIngat}" Style="{StaticResource T.Small}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+                <Border Style="{StaticResource SettingRow}" Visibility="{Binding PunyaAkun, Converter={StaticResource BoolToVisible}}">
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" Style="{StaticResource Btn.Secondary}" Command="{Binding GantiPasswordCommand}" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <c:Icon Kind="key" Size="16"/>
+                                <TextBlock Text="Ganti password" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Password" Style="{StaticResource SettingTitle}"/>
+                            <TextBlock Style="{StaticResource T.Small}"><Run Text="Akun "/><Run Text="{Binding Username, Mode=OneWay}"/></TextBlock>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- Database -->
+        <Border Style="{StaticResource Card}" Margin="0,0,0,16">
+            <StackPanel>
+                <TextBlock Text="Database" Style="{StaticResource T.H2}"/>
+                <Border Style="{StaticResource SettingFirst}">
+                    <DockPanel>
+                        <c:Badge DockPanel.Dock="Right" Text="{Binding LabelDatabase}" Tone="{Binding ToneDatabase}" VerticalAlignment="Center"/>
+                        <StackPanel VerticalAlignment="Center" Margin="0,0,16,0">
+                            <TextBlock Text="Database aktif" Style="{StaticResource SettingTitle}"/>
+                            <TextBlock Text="{Binding PathDatabase}" Style="{StaticResource T.Small}" FontFamily="Consolas" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+                <Border Style="{StaticResource SettingRow}">
+                    <StackPanel>
+                        <TextBlock Text="Pemisahan data" Style="{StaticResource SettingTitle}"/>
+                        <TextBlock Text="Akun memakai ternakku.db, tamu memakai tamu.db. Keduanya tidak saling membaca." Style="{StaticResource T.Small}" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource SettingRow}" Visibility="{Binding BolehBackup, Converter={StaticResource BoolToVisible}}">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Button Style="{StaticResource Btn.Secondary}" Command="{Binding BackupCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <c:Icon Kind="download" Size="16"/>
+                                    <TextBlock Text="Backup" Margin="8,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource Btn.Secondary}" Command="{Binding PulihkanCommand}" Margin="8,0,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <c:Icon Kind="restore" Size="16"/>
+                                    <TextBlock Text="Pulihkan" Margin="8,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Center" Margin="0,0,16,0">
+                            <TextBlock Text="Backup dan pulihkan" Style="{StaticResource SettingTitle}"/>
+                            <TextBlock Text="Salin file database ke folder pilihan" Style="{StaticResource T.Small}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+                <Border Style="{StaticResource SettingRow}" Visibility="{Binding IsTamu, Converter={StaticResource BoolToVisible}}">
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" Style="{StaticResource Btn.Secondary}" Content="Kosongkan" Command="{Binding KosongkanTamuCommand}" VerticalAlignment="Center"
+                                Foreground="{DynamicResource DangerBrush}"/>
+                        <StackPanel VerticalAlignment="Center" Margin="0,0,16,0">
+                            <TextBlock Text="Kosongkan database tamu" Style="{StaticResource SettingTitle}"/>
+                            <TextBlock Text="Kembalikan tamu.db ke data contoh awal" Style="{StaticResource T.Small}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <TextBlock Text="TernakKu v1.0" Style="{StaticResource T.Small}"/>
+    </StackPanel>
+</UserControl>

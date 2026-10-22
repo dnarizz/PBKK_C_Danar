@@ -1,0 +1,311 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Pages.DetailTernakView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls"
+             x:Name="page">
+    <UserControl.Resources>
+        <Style x:Key="ToneIco" TargetType="Border" BasedOn="{StaticResource IcoBox}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Tone}" Value="info">
+                    <Setter Property="Background" Value="{DynamicResource InfoSoftBrush}"/>
+                    <Setter Property="TextElement.Foreground" Value="{DynamicResource InfoBrush}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Tone}" Value="danger">
+                    <Setter Property="Background" Value="{DynamicResource DangerSoftBrush}"/>
+                    <Setter Property="TextElement.Foreground" Value="{DynamicResource DangerBrush}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Tone}" Value="warn">
+                    <Setter Property="Background" Value="{DynamicResource WarnSoftBrush}"/>
+                    <Setter Property="TextElement.Foreground" Value="{DynamicResource WarnBrush}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="Kartu">
+            <Border Style="{StaticResource Card}" Margin="0,0,16,0">
+                <StackPanel>
+                    <DockPanel>
+                        <Border DockPanel.Dock="Right" Style="{StaticResource ToneIco}"><c:Icon Kind="{Binding Ikon}" Size="16" Thickness="2"/></Border>
+                        <TextBlock Text="{Binding Label}" Style="{StaticResource T.Muted}" VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <TextBlock Text="{Binding Nilai}" Style="{StaticResource T.Stat}"/>
+                        <TextBlock Text="{Binding Satuan}" Style="{StaticResource T.Muted}" VerticalAlignment="Bottom" Margin="6,0,0,5"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Sub}" Style="{StaticResource T.Small}" Margin="0,2,0,0" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+        <Style x:Key="SectionTitle" TargetType="TextBlock" BasedOn="{StaticResource T.H2}">
+            <Setter Property="Margin" Value="20,18,20,8"/>
+        </Style>
+        <Style x:Key="TonedText" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{DynamicResource Text2Brush}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Tone}" Value="ok"><Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/></DataTrigger>
+                <DataTrigger Binding="{Binding Tone}" Value="danger"><Setter Property="Foreground" Value="{DynamicResource DangerBrush}"/></DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="SimpulTemplate">
+            <Button Style="{StaticResource Btn.Plain}" Margin="8,0" Width="210" Command="{Binding DataContext.BukaCommand, ElementName=page}" CommandParameter="{Binding Id}"
+                    IsEnabled="{Binding BisaDibuka}">
+                <Grid>
+                    <Border x:Name="box" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource BorderStrongBrush}" Background="{DynamicResource SurfaceBrush}" Padding="12,10">
+                        <StackPanel>
+                            <TextBlock Text="{Binding Peran}" Style="{StaticResource T.Caps}"/>
+                            <TextBlock x:Name="judul" Text="{Binding Judul}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Margin="0,2,0,0"/>
+                            <TextBlock Text="{Binding Sub}" Style="{StaticResource T.Small}" TextTrimming="CharacterEllipsis" Visibility="{Binding AdaSub, Converter={StaticResource BoolToVisible}}"/>
+                        </StackPanel>
+                    </Border>
+                    <Rectangle x:Name="dash" RadiusX="10" RadiusY="10" Stroke="{DynamicResource BorderStrongBrush}" StrokeThickness="1.5" StrokeDashArray="4 3" Visibility="Collapsed"/>
+                </Grid>
+            </Button>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Tidak}" Value="True">
+                    <Setter TargetName="box" Property="BorderBrush" Value="Transparent"/>
+                    <Setter TargetName="box" Property="Background" Value="{DynamicResource SurfaceSunkenBrush}"/>
+                    <Setter TargetName="judul" Property="Foreground" Value="{DynamicResource Text2Brush}"/>
+                    <Setter TargetName="judul" Property="FontWeight" Value="Normal"/>
+                    <Setter TargetName="dash" Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Saya}" Value="True">
+                    <Setter TargetName="box" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+                    <Setter TargetName="box" Property="Background" Value="{DynamicResource PrimarySoftBrush}"/>
+                    <Setter TargetName="box" Property="BorderThickness" Value="2"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding BisaDibuka}" Value="True">
+                    <Setter TargetName="judul" Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <!-- Not found -->
+        <Border Style="{StaticResource Card}" Visibility="{Binding TidakAda, Converter={StaticResource BoolToVisible}}">
+            <StackPanel HorizontalAlignment="Center" Margin="0,24">
+                <TextBlock Text="Ternak tidak ditemukan" Style="{StaticResource T.Strong}" HorizontalAlignment="Center"/>
+                <Button Style="{StaticResource Btn.Secondary}" Content="Kembali ke daftar ternak" Command="{Binding KeDaftarCommand}" Margin="0,12,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Visibility="{Binding Ada, Converter={StaticResource BoolToVisible}}">
+            <!-- Breadcrumb -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                <Button Style="{StaticResource Btn.Link}" Content="Ternak" Command="{Binding KeDaftarCommand}"/>
+                <c:Icon Kind="chevR" Size="14" Thickness="2" Margin="2,0" Foreground="{DynamicResource Text2Brush}"/>
+                <TextBlock Text="{Binding Kode}" Style="{StaticResource T.Muted}" VerticalAlignment="Center" Margin="6,0,0,0"/>
+            </StackPanel>
+
+            <!-- Profile card -->
+            <Border Style="{StaticResource Card}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Width="96" Height="96" CornerRadius="12" Background="{DynamicResource SurfaceSunkenBrush}" VerticalAlignment="Top" AutomationProperties.Name="Foto ternak belum ada">
+                        <Path Data="{StaticResource Art.cow}" Stroke="{DynamicResource Text2Brush}" StrokeThickness="2" Width="64" Height="64" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" Margin="20,0" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding NamaTampil}" Style="{StaticResource T.H1}" FontSize="24"/>
+                            <TextBlock Text="{Binding Kode}" Style="{StaticResource T.Muted}" VerticalAlignment="Bottom" Margin="10,0,10,3"/>
+                            <c:Badge Text="{Binding KondisiTeks}" Tone="{Binding KondisiTone}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <ItemsControl ItemsSource="{Binding Fakta}" Margin="0,8,0,0">
+                            <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate><TextBlock Text="{Binding}" Style="{StaticResource T.Muted}" Margin="0,0,20,4"/></DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top">
+                        <Button Style="{StaticResource Btn.Secondary}" Command="{Binding MutasiCommand}" Visibility="{Binding BisaMutasi, Converter={StaticResource BoolToVisible}}">
+                            <StackPanel Orientation="Horizontal"><c:Icon Kind="swap" Size="16"/><TextBlock Text="Mutasi" Margin="8,0,0,0"/></StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource Btn.Primary}" Margin="10,0,0,0" Command="{Binding TimbangCommand}" Visibility="{Binding BisaTimbang, Converter={StaticResource BoolToVisible}}">
+                            <StackPanel Orientation="Horizontal"><c:Icon Kind="scale" Size="16"/><TextBlock Text="Catat penimbangan" Margin="8,0,0,0"/></StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Stat cards -->
+            <ItemsControl ItemsSource="{Binding Kartu}" ItemTemplate="{StaticResource Kartu}" Margin="0,0,-16,20">
+                <ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <!-- Tabs -->
+            <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" Margin="0,0,0,16">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Style="{StaticResource Tab}" GroupName="tabDetail" Content="Pertumbuhan" IsChecked="{Binding TabPertumbuhan}"/>
+                    <RadioButton Style="{StaticResource Tab}" GroupName="tabDetail" Content="Profil" IsChecked="{Binding TabProfil}"/>
+                    <RadioButton Style="{StaticResource Tab}" GroupName="tabDetail" Content="Kesehatan" IsChecked="{Binding TabKesehatan}"/>
+                    <RadioButton Style="{StaticResource Tab}" GroupName="tabDetail" Content="Reproduksi" IsChecked="{Binding TabReproduksi}"/>
+                    <RadioButton Style="{StaticResource Tab}" GroupName="tabDetail" Content="Silsilah" IsChecked="{Binding TabSilsilah}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Pertumbuhan -->
+            <Grid Visibility="{Binding TabPertumbuhan, Converter={StaticResource BoolToVisible}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="1.2*"/>
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource Card}" VerticalAlignment="Top">
+                    <StackPanel>
+                        <TextBlock Text="Berat badan sejak masuk" Style="{StaticResource T.H2}"/>
+                        <TextBlock Text="Penimbangan tiap 14 hari · kg" Style="{StaticResource T.Muted}" Margin="0,2,0,12"/>
+                        <c:LineChart Height="260" Values="{Binding NilaiBerat}" Labels="{Binding LabelBerat}" Target="{Binding Target}"/>
+                        <TextBlock Text="Belum ada penimbangan" Style="{StaticResource T.Muted}" Visibility="{Binding NilaiBerat, Converter={StaticResource EmptyToVisible}}"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource CardFlush}" VerticalAlignment="Top">
+                    <StackPanel>
+                        <TextBlock Text="Riwayat penimbangan" Style="{StaticResource SectionTitle}"/>
+                        <DataGrid Style="{StaticResource Grid}" ItemsSource="{Binding RiwayatBerat}" MaxHeight="300">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Tanggal" Binding="{Binding Tanggal}" Width="*"/>
+                                <DataGridTextColumn Header="Berat" Binding="{Binding Berat}" Width="80" HeaderStyle="{StaticResource GridHeaderRight}" ElementStyle="{StaticResource Cell.StrongRight}"/>
+                                <DataGridTemplateColumn Header="Selisih" Width="70" HeaderStyle="{StaticResource GridHeaderRight}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate><TextBlock Text="{Binding Selisih}" Style="{StaticResource TonedText}"/></DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="L. dada" Binding="{Binding Dada}" Width="80" HeaderStyle="{StaticResource GridHeaderRight}" ElementStyle="{StaticResource Cell.MutedRight}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Profil -->
+            <Border Style="{StaticResource Card}" Visibility="{Binding TabProfil, Converter={StaticResource BoolToVisible}}">
+                <ItemsControl ItemsSource="{Binding Profil}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="{DynamicResource DividerBrush}" BorderThickness="0,0,0,1" Padding="0,10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="220"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Kunci}" Style="{StaticResource T.Muted}"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Nilai}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+
+            <!-- Kesehatan -->
+            <Border Style="{StaticResource Card}" Visibility="{Binding TabKesehatan, Converter={StaticResource BoolToVisible}}">
+                <StackPanel>
+                    <DockPanel Margin="0,0,0,16">
+                        <Button DockPanel.Dock="Right" Style="{StaticResource Btn.SecondarySm}" Command="{Binding PeriksaCommand}" Visibility="{Binding BisaPeriksa, Converter={StaticResource BoolToVisible}}">
+                            <StackPanel Orientation="Horizontal"><c:Icon Kind="plus" Size="14" Thickness="2"/><TextBlock Text="Catat pemeriksaan" Margin="6,0,0,0"/></StackPanel>
+                        </Button>
+                        <TextBlock Text="Riwayat kesehatan" Style="{StaticResource T.H2}" VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBlock Text="Belum ada catatan kesehatan" Style="{StaticResource T.Muted}" Visibility="{Binding RiwayatSehat, Converter={StaticResource EmptyToVisible}}"/>
+                    <ItemsControl ItemsSource="{Binding RiwayatSehat}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="24"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Ellipse x:Name="dot" Width="12" Height="12" Fill="{DynamicResource PrimaryBrush}" VerticalAlignment="Top" Margin="0,4,0,0" HorizontalAlignment="Left"/>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="{Binding Tgl}" Style="{StaticResource T.Small}"/>
+                                        <TextBlock Text="{Binding Judul}" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding Sub}" Style="{StaticResource T.Muted}"/>
+                                    </StackPanel>
+                                </Grid>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding Waspada}" Value="True"><Setter TargetName="dot" Property="Fill" Value="{DynamicResource WarnBarBrush}"/></DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+            <!-- Reproduksi -->
+            <Grid Visibility="{Binding TabReproduksi, Converter={StaticResource BoolToVisible}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="1.2*"/>
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource CardFlush}" VerticalAlignment="Top">
+                    <StackPanel>
+                        <TextBlock Text="{Binding JudulKawin}" Style="{StaticResource SectionTitle}"/>
+                        <StackPanel Visibility="{Binding Betina, Converter={StaticResource BoolToVisible}}">
+                            <DataGrid Style="{StaticResource Grid}" ItemsSource="{Binding Kawin}" MaxHeight="300" Visibility="{Binding Kawin, Converter={StaticResource EmptyToCollapsed}}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Tanggal kawin" Binding="{Binding Tanggal}" Width="130"/>
+                                    <DataGridTextColumn Header="Metode" Binding="{Binding Metode}" Width="*"/>
+                                    <DataGridTemplateColumn Header="Status" Width="140">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate><c:Badge Text="{Binding Status}" Tone="{Binding Tone}" HorizontalAlignment="Left"/></DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Perkiraan lahir" Binding="{Binding Perkiraan}" Width="130" HeaderStyle="{StaticResource GridHeaderRight}" ElementStyle="{StaticResource Cell.Right}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <TextBlock Text="Belum ada perkawinan" Style="{StaticResource T.Muted}" Margin="20,8,20,24" Visibility="{Binding Kawin, Converter={StaticResource EmptyToVisible}}"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding RingkasPejantan}" Style="{StaticResource T.Muted}" Margin="20,8,20,24" Visibility="{Binding Betina, Converter={StaticResource BoolToCollapsed}}"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource Card}" VerticalAlignment="Top">
+                    <StackPanel>
+                        <DockPanel Margin="0,0,0,8">
+                            <c:Badge DockPanel.Dock="Right" Text="{Binding Keturunan.Count, Mode=OneWay}" Tone="neutral" ShowDot="False"/>
+                            <TextBlock Text="Keturunan" Style="{StaticResource T.H2}"/>
+                        </DockPanel>
+                        <TextBlock Text="Belum ada keturunan tercatat" Style="{StaticResource T.Muted}" Visibility="{Binding Keturunan, Converter={StaticResource EmptyToVisible}}"/>
+                        <ItemsControl ItemsSource="{Binding Keturunan}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource Btn.Plain}" Command="{Binding DataContext.BukaCommand, ElementName=page}" CommandParameter="{Binding Id}">
+                                        <DockPanel Margin="0,6">
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding Sub}" Style="{StaticResource T.Small}" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Label}" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryBrush}" TextTrimming="CharacterEllipsis" Margin="0,0,12,0"/>
+                                        </DockPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Silsilah -->
+            <Border Style="{StaticResource Card}" Visibility="{Binding TabSilsilah, Converter={StaticResource BoolToVisible}}">
+                <StackPanel>
+                    <StackPanel HorizontalAlignment="Center" Margin="0,24" Visibility="{Binding SilsilahKosong, Converter={StaticResource BoolToVisible}}">
+                        <TextBlock Text="Silsilah belum tercatat" Style="{StaticResource T.Strong}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding PesanSilsilah}" Style="{StaticResource T.Muted}" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <ItemsControl ItemsSource="{Binding Tingkat}" Visibility="{Binding SilsilahKosong, Converter={StaticResource BoolToCollapsed}}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding}" ItemTemplate="{StaticResource SimpulTemplate}" HorizontalAlignment="Center" Margin="0,0,0,16">
+                                    <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel HorizontalAlignment="Center"/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

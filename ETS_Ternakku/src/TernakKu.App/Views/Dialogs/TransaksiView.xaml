@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Dialogs.TransaksiView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls">
+    <StackPanel>
+        <TextBlock Text="Jenis" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+        <Border Style="{StaticResource SegGroup}">
+            <StackPanel Orientation="Horizontal">
+                <RadioButton GroupName="jenisTrx" Content="Pemasukan" Style="{StaticResource Seg}" IsChecked="{Binding Masuk}"/>
+                <RadioButton GroupName="jenisTrx" Content="Pengeluaran" Style="{StaticResource Seg}" IsChecked="{Binding Keluar}"/>
+            </StackPanel>
+        </Border>
+
+        <Grid Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel>
+                <TextBlock Text="Kategori" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+                <ComboBox ItemsSource="{Binding DaftarKategori}" SelectedItem="{Binding Kategori}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Jumlah (Rp)" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+                <TextBox Text="{Binding Jumlah, UpdateSourceTrigger=PropertyChanged}" c:Ui.Placeholder="0" c:Ui.Invalid="{Binding Galat.Ada[Jumlah]}"/>
+                <TextBlock Text="{Binding Galat[Jumlah]}" Style="{StaticResource T.Error}" Margin="0,4,0,0" Visibility="{Binding Galat[Jumlah], Converter={StaticResource EmptyToCollapsed}}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Margin="0,16,0,0">
+                <TextBlock Text="Tanggal" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+                <DatePicker SelectedDate="{Binding Tanggal}" DisplayDateEnd="{Binding BatasTanggal, Mode=OneWay}"/>
+                <TextBlock Text="{Binding Galat[Tanggal]}" Style="{StaticResource T.Error}" Margin="0,4,0,0" Visibility="{Binding Galat[Tanggal], Converter={StaticResource EmptyToCollapsed}}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,16,0,0">
+                <TextBlock Text="Keterangan" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+                <TextBox Text="{Binding Keterangan, UpdateSourceTrigger=PropertyChanged}" c:Ui.Placeholder="Opsional"/>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</UserControl>

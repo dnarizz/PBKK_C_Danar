@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Pages.PakanView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls"
+             x:Name="page">
+    <UserControl.InputBindings>
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding SimpanCommand}"/>
+    </UserControl.InputBindings>
+    <StackPanel>
+        <!-- Header -->
+        <Grid Margin="0,0,0,20">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Pakan" Style="{StaticResource T.H1}"/>
+                <TextBlock Text="{Binding Subjudul}" Style="{StaticResource T.Muted}" Margin="0,2,0,0"/>
+            </StackPanel>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource Btn.Primary}" Command="{Binding TambahCommand}"
+                    Visibility="{Binding BolehPakan, Converter={StaticResource BoolToVisible}}">
+                <StackPanel Orientation="Horizontal">
+                    <c:Icon Kind="download" Size="16" Thickness="2"/>
+                    <TextBlock Text="Catat pakan masuk" Margin="8,0,0,0"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <!-- Stock cards -->
+        <ItemsControl ItemsSource="{Binding Kartu}" Margin="0,0,-16,4">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><UniformGrid Columns="{Binding KolomKartu}"/></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource Card}" Padding="18,16" Margin="0,0,16,16">
+                        <StackPanel>
+                            <DockPanel>
+                                <c:Badge DockPanel.Dock="Right" Text="{Binding Status}" Tone="{Binding Tone}"/>
+                                <TextBlock Text="{Binding Nama}" Style="{StaticResource T.Strong}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                            </DockPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,10">
+                                <TextBlock Text="{Binding Jumlah}" FontSize="28" FontWeight="Bold" Typography.NumeralAlignment="Tabular"/>
+                                <TextBlock Text="{Binding Satuan}" Style="{StaticResource T.Muted}" Margin="6,0,0,4" VerticalAlignment="Bottom"/>
+                            </StackPanel>
+                            <ProgressBar x:Name="meter" Style="{StaticResource Meter}" Value="{Binding Persen, Mode=OneWay}"/>
+                            <TextBlock Text="{Binding Sub}" Style="{StaticResource T.Small}" TextWrapping="Wrap" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Tone}" Value="warn"><Setter TargetName="meter" Property="Foreground" Value="{DynamicResource WarnBarBrush}"/></DataTrigger>
+                        <DataTrigger Binding="{Binding Tone}" Value="danger"><Setter TargetName="meter" Property="Foreground" Value="{DynamicResource DangerBrush}"/></DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="360"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Feeding form -->
+            <Border Style="{StaticResource Card}" VerticalAlignment="Top" Visibility="{Binding BolehPakan, Converter={StaticResource BoolToVisible}}">
+                <StackPanel>
+                    <TextBlock Text="Catat pemberian pakan" Style="{StaticResource T.H2}" Margin="0,0,0,14"/>
+                    <TextBlock Text="Kandang" Style="{StaticResource T.Label}"/>
+                    <ComboBox ItemsSource="{Binding DaftarKandang}" DisplayMemberPath="Label" SelectedValuePath="Id" SelectedValue="{Binding IdKandang}" AutomationProperties.Name="Kandang"/>
+                    <TextBlock Text="Jenis pakan" Style="{StaticResource T.Label}" Margin="0,14,0,6"/>
+                    <ComboBox ItemsSource="{Binding DaftarPakan}" DisplayMemberPath="Label" SelectedValuePath="Id" SelectedValue="{Binding IdPakan}" AutomationProperties.Name="Jenis pakan"/>
+                    <TextBlock Text="Jumlah" Style="{StaticResource T.Label}" Margin="0,14,0,6"/>
+                    <TextBox Text="{Binding Jumlah, UpdateSourceTrigger=PropertyChanged}" c:Ui.Placeholder="0" c:Ui.Suffix="{Binding Satuan}" c:Ui.Invalid="{Binding TidakValid}" AutomationProperties.Name="Jumlah"/>
+                    <TextBlock Text="{Binding PesanError}" Style="{StaticResource T.Error}" Visibility="{Binding PesanError, Converter={StaticResource EmptyToCollapsed}}"/>
+                    <TextBlock Text="{Binding Hint}" Style="{StaticResource T.Hint}" Visibility="{Binding Hint, Converter={StaticResource EmptyToCollapsed}}"/>
+                    <TextBlock Text="Isi cepat" Style="{StaticResource T.Label}" Margin="0,14,0,6"/>
+                    <WrapPanel>
+                        <ToggleButton Style="{StaticResource Chip}" Content="{Binding TeksJatah}" Command="{Binding IsiCepatCommand}" CommandParameter="jatah" Click="Chip_Click" Margin="0,0,8,8"/>
+                        <ToggleButton Style="{StaticResource Chip}" Content="{Binding TeksSetengah}" Command="{Binding IsiCepatCommand}" CommandParameter="setengah" Click="Chip_Click" Margin="0,0,8,8"/>
+                    </WrapPanel>
+                    <Button Style="{StaticResource Btn.Primary}" Command="{Binding SimpanCommand}" Margin="0,6,0,0" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <c:Icon Kind="check" Size="16" Thickness="2.25"/>
+                            <TextBlock Text="Simpan" Margin="8,0,0,0"/>
+                            <TextBlock Text="Ctrl S" Margin="10,1,0,0" FontSize="11" Opacity="0.7" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!-- Tables -->
+            <Border Grid.Column="2" Style="{StaticResource CardFlush}" VerticalAlignment="Top">
+                <StackPanel>
+                    <DockPanel Margin="20,18,20,8">
+                        <c:Badge DockPanel.Dock="Right" Tone="neutral" ShowDot="False" Text="{Binding JumlahCatatan}"/>
+                        <TextBlock Text="Pemberian hari ini" Style="{StaticResource T.H2}"/>
+                    </DockPanel>
+                    <TextBlock Text="Belum ada pemberian hari ini" Style="{StaticResource T.Muted}" Margin="20,4,20,18" Visibility="{Binding HariIni, Converter={StaticResource EmptyToVisible}}"/>
+                    <DataGrid Style="{StaticResource Grid}" ItemsSource="{Binding HariIni}" MaxHeight="300" Visibility="{Binding HariIni, Converter={StaticResource EmptyToCollapsed}}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Waktu" Binding="{Binding Waktu}" Width="80"/>
+                            <DataGridTextColumn Header="Kandang" Binding="{Binding Kandang}" Width="*"/>
+                            <DataGridTextColumn Header="Pakan" Binding="{Binding Pakan}" Width="*"/>
+                            <DataGridTextColumn Header="Jumlah" Binding="{Binding Jumlah}" Width="100" HeaderStyle="{StaticResource GridHeaderRight}" ElementStyle="{StaticResource Cell.StrongRight}"/>
+                            <DataGridTextColumn Header="Dicatat" Binding="{Binding Dicatat}" Width="90" ElementStyle="{StaticResource Cell.Muted}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Margin="0,8,0,0" Padding="20,18,20,8">
+                        <TextBlock Text="Pakan masuk terakhir" Style="{StaticResource T.H2}"/>
+                    </Border>
+                    <DataGrid Style="{StaticResource Grid}" ItemsSource="{Binding Masuk}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Tanggal" Binding="{Binding Tanggal}" Width="110"/>
+                            <DataGridTextColumn Header="Pakan" Binding="{Binding Pakan}" Width="*"/>
+                            <DataGridTextColumn Header="Pemasok" Binding="{Binding Pemasok}" Width="*" ElementStyle="{StaticResource Cell.Muted}"/>
+                            <DataGridTextColumn Header="Jumlah" Binding="{Binding Jumlah}" Width="100" HeaderStyle="{StaticResource GridHeaderRight}" ElementStyle="{StaticResource Cell.Right}"/>
+                            <DataGridTextColumn Header="Total" Binding="{Binding Total}" Width="110" HeaderStyle="{StaticResource GridHeaderRight}" ElementStyle="{StaticResource Cell.StrongRight}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </StackPanel>
+</UserControl>

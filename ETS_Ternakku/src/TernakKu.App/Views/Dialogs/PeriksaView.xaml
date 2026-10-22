@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Dialogs.PeriksaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.ColumnSpan="3" Margin="0,0,0,14">
+            <TextBlock Text="Ternak" Style="{StaticResource T.Label}"/>
+            <ComboBox ItemsSource="{Binding DaftarTernak}" DisplayMemberPath="Label" SelectedValuePath="Id" SelectedValue="{Binding IdTernak}" c:Ui.Invalid="{Binding ErrTernak.Ada}" AutomationProperties.Name="Ternak"/>
+            <TextBlock Text="{Binding ErrTernak.Teks}" Style="{StaticResource T.Error}" Visibility="{Binding ErrTernak.Teks, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="0,0,0,14">
+            <TextBlock Text="Tanggal" Style="{StaticResource T.Label}"/>
+            <DatePicker SelectedDate="{Binding Tanggal}" DisplayDateEnd="{Binding BatasTanggal, Mode=OneWay}" AutomationProperties.Name="Tanggal"/>
+            <TextBlock Text="{Binding ErrTanggal.Teks}" Style="{StaticResource T.Error}" Visibility="{Binding ErrTanggal.Teks, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,14">
+            <TextBlock Text="Kondisi setelah diperiksa" Style="{StaticResource T.Label}"/>
+            <ComboBox ItemsSource="{Binding DaftarKondisi}" DisplayMemberPath="Teks" SelectedValuePath="Nilai" SelectedValue="{Binding Kondisi}" AutomationProperties.Name="Kondisi"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Margin="0,0,0,14">
+            <TextBlock Text="Keluhan" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding Keluhan, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding ErrKeluhan.Ada}" AutomationProperties.Name="Keluhan"/>
+            <TextBlock Text="{Binding ErrKeluhan.Teks}" Style="{StaticResource T.Error}" Visibility="{Binding ErrKeluhan.Teks, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,0,0,14">
+            <TextBlock Text="Diagnosa" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding Diagnosa, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding ErrDiagnosa.Ada}" AutomationProperties.Name="Diagnosa"/>
+            <TextBlock Text="{Binding ErrDiagnosa.Teks}" Style="{StaticResource T.Error}" Visibility="{Binding ErrDiagnosa.Teks, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="3" Margin="0,0,0,14">
+            <TextBlock Text="Tindakan" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding Tindakan, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="Tindakan"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4">
+            <TextBlock Text="Obat (opsional)" Style="{StaticResource T.Label}"/>
+            <ComboBox ItemsSource="{Binding DaftarObat}" DisplayMemberPath="Label" SelectedValuePath="Id" SelectedValue="{Binding IdObat}" AutomationProperties.Name="Obat"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Grid.Column="2">
+            <TextBlock Text="{Binding LabelDosis}" Style="{StaticResource T.Label}"/>
+            <TextBox Text="{Binding Dosis, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding AdaObat}" c:Ui.Invalid="{Binding ErrDosis.Ada}" AutomationProperties.Name="Dosis"/>
+            <TextBlock Text="{Binding ErrDosis.Teks}" Style="{StaticResource T.Error}" Visibility="{Binding ErrDosis.Teks, Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

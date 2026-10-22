@@ -1,0 +1,87 @@
+<UserControl x:Class="TernakKu.App.Views.Dialogs.MasterEditView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls">
+    <UserControl.Resources>
+        <Style x:Key="Field" TargetType="StackPanel">
+            <Setter Property="Width" Value="232"/>
+            <Setter Property="Margin" Value="0,0,16,16"/>
+        </Style>
+    </UserControl.Resources>
+    <WrapPanel Margin="0,0,0,-16">
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding IsRas, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Spesies" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <ComboBox ItemsSource="{Binding DaftarSpesies}" DisplayMemberPath="Nama" SelectedValuePath="Id" SelectedValue="{Binding SpesiesId}"/>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding IsKandang, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Kode" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <TextBox Text="{Binding Kode, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding Galat.Ada[Kode]}"/>
+            <TextBlock Text="{Binding Galat[Kode]}" Style="{StaticResource T.Error}" Margin="0,4,0,0" Visibility="{Binding Galat[Kode], Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource Field}">
+            <TextBlock Text="Nama" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <TextBox Text="{Binding Nama, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding Galat.Ada[Nama]}"/>
+            <TextBlock Text="{Binding Galat[Nama]}" Style="{StaticResource T.Error}" Margin="0,4,0,0" Visibility="{Binding Galat[Nama], Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding IsKandang, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Jenis" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <ComboBox ItemsSource="{Binding DaftarJenisKandang}" SelectedItem="{Binding Jenis}"/>
+        </StackPanel>
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding IsObat, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Jenis" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <ComboBox ItemsSource="{Binding DaftarJenisObat}" SelectedItem="{Binding Jenis}"/>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding IsKandang, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Spesies" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <ComboBox ItemsSource="{Binding DaftarSpesiesCampur}" DisplayMemberPath="Nama" SelectedValuePath="Id" SelectedValue="{Binding SpesiesId}"/>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding IsSpesies, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Kode ear tag (2 huruf)" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <TextBox Text="{Binding KodePrefix, UpdateSourceTrigger=PropertyChanged}" MaxLength="2" c:Ui.Invalid="{Binding Galat.Ada[KodePrefix]}"/>
+            <TextBlock Text="{Binding Galat[KodePrefix]}" Style="{StaticResource T.Error}" Margin="0,4,0,0" Visibility="{Binding Galat[KodePrefix], Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding IsSpesies, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Masa bunting (hari)" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <TextBox Text="{Binding MasaBunting, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding Galat.Ada[MasaBunting]}"/>
+            <TextBlock Text="{Binding Galat[MasaBunting]}" Style="{StaticResource T.Error}" Margin="0,4,0,0" Visibility="{Binding Galat[MasaBunting], Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding IsKandang, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Kapasitas (ekor)" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <TextBox Text="{Binding Kapasitas, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding Galat.Ada[Kapasitas]}"/>
+            <TextBlock Text="{Binding Galat[Kapasitas]}" Style="{StaticResource T.Error}" Margin="0,4,0,0" Visibility="{Binding Galat[Kapasitas], Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding IsPakan, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Satuan" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <ComboBox ItemsSource="{Binding DaftarSatuanPakan}" SelectedItem="{Binding Satuan}"/>
+        </StackPanel>
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding IsObat, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Satuan" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <TextBox Text="{Binding Satuan, UpdateSourceTrigger=PropertyChanged}" c:Ui.Placeholder="mis. dosis, botol" c:Ui.Invalid="{Binding Galat.Ada[Satuan]}"/>
+            <TextBlock Text="{Binding Galat[Satuan]}" Style="{StaticResource T.Error}" Margin="0,4,0,0" Visibility="{Binding Galat[Satuan], Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding PakaiStokMinimum, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Stok minimum" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <TextBox Text="{Binding StokMinimum, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding Galat.Ada[StokMinimum]}"/>
+            <TextBlock Text="{Binding Galat[StokMinimum]}" Style="{StaticResource T.Error}" Margin="0,4,0,0" Visibility="{Binding Galat[StokMinimum], Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding IsPakan, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Harga per satuan (Rp)" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <TextBox Text="{Binding Harga, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding Galat.Ada[Harga]}"/>
+            <TextBlock Text="{Binding Galat[Harga]}" Style="{StaticResource T.Error}" Margin="0,4,0,0" Visibility="{Binding Galat[Harga], Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+        <StackPanel Style="{StaticResource Field}" Visibility="{Binding IsPakan, Converter={StaticResource BoolToVisible}}">
+            <TextBlock Text="Pemakaian per hari" Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+            <TextBox Text="{Binding Pemakaian, UpdateSourceTrigger=PropertyChanged}" c:Ui.Invalid="{Binding Galat.Ada[Pemakaian]}"/>
+            <TextBlock Text="{Binding Galat[Pemakaian]}" Style="{StaticResource T.Error}" Margin="0,4,0,0" Visibility="{Binding Galat[Pemakaian], Converter={StaticResource EmptyToCollapsed}}"/>
+        </StackPanel>
+    </WrapPanel>
+</UserControl>

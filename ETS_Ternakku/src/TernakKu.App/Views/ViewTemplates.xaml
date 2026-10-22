@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:TernakKu.App.ViewModels"
+                    xmlns:v="clr-namespace:TernakKu.App.Views"
+                    xmlns:pvm="clr-namespace:TernakKu.App.ViewModels.Pages"
+                    xmlns:pv="clr-namespace:TernakKu.App.Views.Pages"
+                    xmlns:dvm="clr-namespace:TernakKu.App.ViewModels.Dialogs"
+                    xmlns:dv="clr-namespace:TernakKu.App.Views.Dialogs">
+    <!-- ViewModel-first navigation: each ViewModel type is shown with its View. -->
+    <DataTemplate DataType="{x:Type vm:LoginViewModel}"><v:LoginView/></DataTemplate>
+    <DataTemplate DataType="{x:Type vm:ShellViewModel}"><v:ShellView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:DashboardViewModel}"><pv:DashboardView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:TernakViewModel}"><pv:TernakView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:DetailTernakViewModel}"><pv:DetailTernakView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:KandangViewModel}"><pv:KandangView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:PakanViewModel}"><pv:PakanView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:KesehatanViewModel}"><pv:KesehatanView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:ReproduksiViewModel}"><pv:ReproduksiView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:MutasiViewModel}"><pv:MutasiView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:KeuanganViewModel}"><pv:KeuanganView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:LaporanViewModel}"><pv:LaporanView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:MasterViewModel}"><pv:MasterView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:PenggunaViewModel}"><pv:PenggunaView/></DataTemplate>
+    <DataTemplate DataType="{x:Type pvm:PengaturanViewModel}"><pv:PengaturanView/></DataTemplate>
+    <!-- DIALOGS -->
+</ResourceDictionary>

@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="TernakKu.App.Views.Pages.ReproduksiView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:TernakKu.App.Controls"
+             x:Name="page">
+    <UserControl.Resources>
+        <Style x:Key="ToneBox" TargetType="Border" BasedOn="{StaticResource IcoBox}">
+            <Setter Property="Width" Value="36"/>
+            <Setter Property="Height" Value="36"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Tone}" Value="danger">
+                    <Setter Property="Background" Value="{DynamicResource DangerSoftBrush}"/>
+                    <Setter Property="TextElement.Foreground" Value="{DynamicResource DangerBrush}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Tone}" Value="warn">
+                    <Setter Property="Background" Value="{DynamicResource WarnSoftBrush}"/>
+                    <Setter Property="TextElement.Foreground" Value="{DynamicResource WarnBrush}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Tone}" Value="info">
+                    <Setter Property="Background" Value="{DynamicResource InfoSoftBrush}"/>
+                    <Setter Property="TextElement.Foreground" Value="{DynamicResource InfoBrush}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <!-- Header -->
+        <Grid Margin="0,0,0,20">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Reproduksi" Style="{StaticResource T.H1}"/>
+                <TextBlock Text="Perkawinan, kebuntingan, dan kelahiran" Style="{StaticResource T.Muted}" Margin="0,2,0,0"/>
+            </StackPanel>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource Btn.Primary}" Command="{Binding TambahCommand}"
+                    Visibility="{Binding BolehKesehatan, Converter={StaticResource BoolToVisible}}">
+                <StackPanel Orientation="Horizontal">
+                    <c:Icon Kind="plus" Size="16" Thickness="2.25"/>
+                    <TextBlock Text="Catat perkawinan" Margin="8,0,0,0"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <!-- Stat cards -->
+        <ItemsControl ItemsSource="{Binding Statistik}" Margin="0,0,-16,4">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><UniformGrid Columns="4"/></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource Card}" Padding="18,16" Margin="0,0,16,16">
+                        <DockPanel>
+                            <Border DockPanel.Dock="Right" Style="{StaticResource ToneBox}" VerticalAlignment="Top"><c:Icon Kind="{Binding Ikon}" Size="18" Thickness="2"/></Border>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Judul}" Style="{StaticResource T.Small}" TextTrimming="CharacterEllipsis"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,4,0,4">
+                                    <TextBlock Text="{Binding Nilai}" Style="{StaticResource T.Stat}"/>
+                                    <TextBlock Text="{Binding Satuan}" Style="{StaticResource T.Muted}" Margin="6,0,0,5" VerticalAlignment="Bottom"/>
+                                </StackPanel>
+                                <TextBlock Style="{StaticResource T.Small}" TextWrapping="Wrap">
+                                    <Run Text="{Binding SubTebal, Mode=OneWay}" Foreground="{DynamicResource WarnBrush}" FontWeight="SemiBold"/><Run Text="{Binding Sub, Mode=OneWay}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Table -->
+        <Border Style="{StaticResource CardFlush}">
+            <StackPanel>
+                <Border Padding="16,14" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1">
+                    <Border Style="{StaticResource SegGroup}">
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Style="{StaticResource Seg}" Content="Sedang berjalan" GroupName="repro" IsChecked="{Binding FilterAktif, Mode=OneWay}" Command="{Binding AturCommand}" CommandParameter="aktif"/>
+                            <RadioButton Style="{StaticResource Seg}" Content="Bunting" GroupName="repro" IsChecked="{Binding FilterBunting, Mode=OneWay}" Command="{Binding AturCommand}" CommandParameter="Bunting"/>
+                            <RadioButton Style="{StaticResource Seg}" Content="Menunggu cek" GroupName="repro" IsChecked="{Binding FilterMenunggu, Mode=OneWay}" Command="{Binding AturCommand}" CommandParameter="Menunggu"/>
+                            <RadioButton Style="{StaticResource Seg}" Content="Riwayat" GroupName="repro" IsChecked="{Binding FilterRiwayat, Mode=OneWay}" Command="{Binding AturCommand}" CommandParameter="riwayat"/>
+                        </StackPanel>
+                    </Border>
+                </Border>
+                <TextBlock Text="Tidak ada data" Style="{StaticResource T.Muted}" Margin="20,18" Visibility="{Binding Baris, Converter={StaticResource EmptyToVisible}}"/>
+                <DataGrid Style="{StaticResource Grid}" ItemsSource="{Binding Baris}" MaxHeight="520" Visibility="{Binding Baris, Converter={StaticResource EmptyToCollapsed}}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Induk" Width="120">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource Btn.Link}" HorizontalAlignment="Left" Padding="0" FontWeight="SemiBold" Content="{Binding Induk}"
+                                            Command="{Binding DataContext.BukaTernakCommand, ElementName=page}" CommandParameter="{Binding IndukId}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Spesies" Binding="{Binding SpesiesRas}" Width="110" ElementStyle="{StaticResource Cell.Muted}"/>
+                        <DataGridTextColumn Header="Tanggal kawin" Binding="{Binding Tanggal}" Width="110"/>
+                        <DataGridTemplateColumn Header="Metode" Width="120">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock><Run Text="{Binding Metode, Mode=OneWay}"/><Run Text=" · "/><Run Text="{Binding MetodeDetail, Mode=OneWay}" Foreground="{DynamicResource Text2Brush}"/></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Status" Width="130">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <c:Badge Text="{Binding StatusTeks}" Tone="{Binding StatusTone}" HorizontalAlignment="Left"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Perkiraan lahir" Binding="{Binding Perkiraan}" Width="115" HeaderStyle="{StaticResource GridHeaderRight}" ElementStyle="{StaticResource Cell.Right}"/>
+                        <DataGridTemplateColumn Header="Kebuntingan" Width="*" MinWidth="170">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid VerticalAlignment="Center">
+                                        <StackPanel Visibility="{Binding AdaMeter, Converter={StaticResource BoolToVisible}}">
+                                            <ProgressBar x:Name="meter" Style="{StaticResource Meter}" Height="6" Value="{Binding Persen, Mode=OneWay}"/>
+                                            <TextBlock Text="{Binding MeterTeks}" Style="{StaticResource T.Small}" FontSize="11" Margin="0,3,0,0"/>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding CekTeks}" Style="{StaticResource T.Small}"/>
+                                    </Grid>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding MeterTone}" Value="warn"><Setter TargetName="meter" Property="Foreground" Value="{DynamicResource WarnBarBrush}"/></DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Aksi" Width="200" HeaderStyle="{StaticResource GridHeaderRight}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <StackPanel Orientation="Horizontal" Visibility="{Binding BisaStatus, Converter={StaticResource BoolToVisible}}">
+                                            <Button Content="Bunting" Style="{StaticResource Btn.SecondarySm}" Command="{Binding DataContext.TandaiBuntingCommand, ElementName=page}" CommandParameter="{Binding Id}"/>
+                                            <Button Content="Gagal" Style="{StaticResource Btn.GhostSm}" Margin="6,0,0,0" Command="{Binding DataContext.TandaiGagalCommand, ElementName=page}" CommandParameter="{Binding Id}"/>
+                                        </StackPanel>
+                                        <Button Content="Catat kelahiran" Style="{StaticResource Btn.PrimarySm}" Visibility="{Binding LahirPrimer, Converter={StaticResource BoolToVisible}}"
+                                                Command="{Binding DataContext.LahirCommand, ElementName=page}" CommandParameter="{Binding Id}"/>
+                                        <Button Content="Catat kelahiran" Style="{StaticResource Btn.SecondarySm}" Visibility="{Binding LahirBiasa, Converter={StaticResource BoolToVisible}}"
+                                                Command="{Binding DataContext.LahirCommand, ElementName=page}" CommandParameter="{Binding Id}"/>
+                                        <TextBlock Text="{Binding LahirTeks}" Style="{StaticResource T.Small}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

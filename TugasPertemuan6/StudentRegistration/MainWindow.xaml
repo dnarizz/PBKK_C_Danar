@@ -1,0 +1,93 @@
+<Window x:Class="StudentRegistration.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Student Registration"
+        Height="500"
+        Width="1250"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,0,0,15">
+
+            <TextBlock Text="Student Registration"
+                       FontSize="26"
+                       FontWeight="Bold"/>
+
+            <Button Content="Refresh"
+                    Width="100"
+                    Margin="30,0,0,0"
+                    Click="RefreshButton_Click"/>
+
+            <!-- Mini Challenge 3: Total Mahasiswa -->
+            <TextBlock x:Name="TotalStudentText"
+                       Text="Total Mahasiswa: 0"
+                       FontSize="16"
+                       VerticalAlignment="Center"
+                       Margin="30,0,0,0"/>
+
+        </StackPanel>
+
+        <DataGrid x:Name="StudentDataGrid"
+                  Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserAddRows="False">
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn
+                    Header="ID"
+                    Binding="{Binding StudentId}"
+                    Width="60"/>
+
+                <DataGridTextColumn
+                    Header="NIM"
+                    Binding="{Binding NIM}"
+                    Width="100"/>
+
+                <DataGridTextColumn
+                    Header="Nama"
+                    Binding="{Binding Name}"
+                    Width="180"/>
+
+                <DataGridTextColumn
+                    Header="Program Studi"
+                    Binding="{Binding ProgramName}"
+                    Width="180"/>
+
+                <DataGridTextColumn
+                    Header="Tanggal Lahir"
+                    Binding="{Binding BirthDate, StringFormat=dd/MM/yyyy}"
+                    Width="120"/>
+
+                <DataGridTextColumn
+                    Header="No. Telepon"
+                    Binding="{Binding PhoneNumber}"
+                    Width="140"/>
+
+                <!-- Mini Challenge 1: Alamat -->
+                <DataGridTextColumn
+                    Header="Alamat"
+                    Binding="{Binding Address}"
+                    Width="250"/>
+
+                <!-- Mini Challenge 2: CreatedAt -->
+                <DataGridTextColumn
+                    Header="Dibuat"
+                    Binding="{Binding CreatedAt, StringFormat=dd/MM/yyyy HH:mm}"
+                    Width="150"/>
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+    </Grid>
+
+</Window>
